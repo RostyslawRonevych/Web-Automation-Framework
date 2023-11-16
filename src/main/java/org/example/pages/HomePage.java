@@ -1,7 +1,7 @@
 package org.example.pages;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,101 +9,66 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
+
 
 
 public class HomePage {
 
-    public void main(String[] args) {
+    @Test
+    public void runBrowserTests() {
+        Properties properties = loadProperties("config.properties");
+        String browserList = properties.getProperty("browsers");
+        List<String> browsers = Arrays.asList(browserList.split(","));
 
-        try {
-            chromeSetUp();
-        } finally {
-            System.out.println("Chrome test failed");
-        }
-
-        try {
-            fireFoxSetUp();
-        } finally {
-            System.out.println("Firefox test failed");
+        for (String browser : browsers) {
+            browserSetUp(browser, properties);
         }
     }
 
-    @Test
-    public void chromeSetUp(){
-        Properties properties = loadProperties("config.properties");
-
-        // Read URL from the properties file
+    private void browserSetUp(String browser, Properties properties) {
         String url = properties.getProperty("url");
         String login = properties.getProperty("login");
         String password = properties.getProperty("password");
 
-        // Create a new instance of the ChromeDriver
-        WebDriver chDriver = new ChromeDriver();
-        chDriver.get(url);
+        WebDriver driver = getDriver(browser);
 
-        // Wait for the title of the page to contain "Example Domain" within 10 seconds
-        WebDriverWait wait = new WebDriverWait(chDriver, Duration.ofSeconds(10));
+        driver.get(url);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.titleContains("Вхід"));
 
-        // Perform actions after the condition is met
-        WebElement loginField = chDriver.findElement(By.xpath("//*[@id=\"login\"]"));
-        loginField.findElement(By.xpath("//*[@id=\"login\"]")).sendKeys(login);
+        WebElement loginField = driver.findElement(By.xpath("//*[@id=\"login\"]"));
+        loginField.sendKeys(login);
 
-        WebElement passwordField = chDriver.findElement(By.xpath("//*[@id=\"password\"]"));
-        passwordField.findElement(By.xpath("//*[@id=\"password\"]")).sendKeys(password);
+        WebElement passwordField = driver.findElement(By.xpath("//*[@id=\"password\"]"));
+        passwordField.sendKeys(password);
 
-        WebElement button = chDriver.findElement(By.xpath("/html/body/div[3]/div/section/div/div/div/div/div/form/div[3]/button"));
-        button.click();
+        WebElement loginButton = driver.findElement(By.xpath("/html/body/div[3]/div/section/div/div/div/div/div/form/div[3]/button"));
+        loginButton.click();
 
-        String currentUrl = chDriver.getCurrentUrl();
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertEquals(currentUrl, "https://skarb.foxminded.ua/");
 
-        assertEquals(currentUrl, "https://skarb.foxminded.ua/");
+        System.out.println(browser + " test finished");
 
-        System.out.println("Chrome test finished");
-
-        chDriver.quit();
+        driver.quit();
     }
 
-    @Test
-    public void fireFoxSetUp(){
-        Properties properties = loadProperties("config.properties");
-
-        // Read URL from the properties file
-        String url = properties.getProperty("url");
-        String login = properties.getProperty("login");
-        String password = properties.getProperty("password");
-
-        // Create a new instance of the FireFoxDriver
-        WebDriver foxDriver = new FirefoxDriver();
-        foxDriver.get(url);
-
-        // Wait for the title of the page to contain "Example Domain" within 10 seconds
-        WebDriverWait wait = new WebDriverWait(foxDriver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.titleContains("Вхід"));
-
-        // Perform actions after the condition is met
-        WebElement loginField = foxDriver.findElement(By.xpath("//*[@id=\"login\"]"));
-        loginField.findElement(By.xpath("//*[@id=\"login\"]")).sendKeys(login);
-
-        WebElement passwordField = foxDriver.findElement(By.xpath("//*[@id=\"password\"]"));
-        passwordField.findElement(By.xpath("//*[@id=\"password\"]")).sendKeys(password);
-
-        WebElement button = foxDriver.findElement(By.xpath("/html/body/div[3]/div/section/div/div/div/div/div/form/div[3]/button"));
-        button.click();
-
-        String currentUrl = foxDriver.getCurrentUrl();
-
-        assertEquals(currentUrl, "https://skarb.foxminded.ua/");
-
-        System.out.println("Firefox test finished");
-
-        foxDriver.quit();
+    private static WebDriver getDriver(String browser) {
+        if ("chrome".equalsIgnoreCase(browser)) {
+            return new ChromeDriver();
+        } else if ("firefox".equalsIgnoreCase(browser)) {
+            return new FirefoxDriver();
+        } else {
+            throw new IllegalArgumentException("Unsupported browser: " + browser);
+        }
     }
 
     private static Properties loadProperties(String fileName) {
@@ -113,7 +78,6 @@ public class HomePage {
                 System.out.println("Sorry, unable to find " + fileName);
                 return properties;
             }
-            // load a properties file from class path, inside static method
             properties.load(input);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -121,3 +85,4 @@ public class HomePage {
         return properties;
     }
 }
+
