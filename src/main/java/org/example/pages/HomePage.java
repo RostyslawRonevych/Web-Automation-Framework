@@ -36,6 +36,7 @@ public class HomePage {
         String url = properties.getProperty("url");
         String login = properties.getProperty("login");
         String password = properties.getProperty("password");
+        String targetUrl = properties.getProperty("homepageUrl");
 
         WebDriver driver = getDriver(browser);
 
@@ -50,11 +51,11 @@ public class HomePage {
         WebElement passwordField = driver.findElement(By.xpath("//*[@id=\"password\"]"));
         passwordField.sendKeys(password);
 
-        WebElement loginButton = driver.findElement(By.xpath("/html/body/div[3]/div/section/div/div/div/div/div/form/div[3]/button"));
+        WebElement loginButton = driver.findElement(By.name("login-button"));
         loginButton.click();
 
         String currentUrl = driver.getCurrentUrl();
-        Assert.assertEquals(currentUrl, "https://skarb.foxminded.ua/");
+        Assert.assertEquals(currentUrl, targetUrl);
 
         System.out.println(browser + " test finished");
 
