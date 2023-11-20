@@ -1,7 +1,9 @@
 package org.example.pages;
 
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.After;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,25 +22,38 @@ import java.util.Properties;
 
 
 public class HomePage {
-
-    @Test
-    public void runBrowserTests() {
-        Properties properties = loadProperties("config.properties");
-        String browserList = properties.getProperty("browsers");
-        List<String> browsers = Arrays.asList(browserList.split(","));
-
-        for (String browser : browsers) {
-            browserSetUp(browser, properties);
-        }
+    Properties properties;
+    List<String> browsers;
+    WebDriver driver;
+    @Before
+    public void setUp() {
+        properties = loadProperties("config.properties");
+        getBrowsers();
     }
 
-    private void browserSetUp(String browser, Properties properties) {
+
+    @Test
+    public void runChromeTests() {
+        loginTest(browsers.get(0), properties);
+    }
+
+    @Test
+    public void runMozillaTests() {
+        loginTest(browsers.get(1), properties);
+    }
+
+    @After
+    public void finish(){
+        driver.quit();
+    }
+
+    private void loginTest(String browser, Properties properties) {
         String url = properties.getProperty("url");
         String login = properties.getProperty("login");
         String password = properties.getProperty("password");
         String targetUrl = properties.getProperty("homepageUrl");
 
-        WebDriver driver = getDriver(browser);
+        driver = getDriver(browser);
 
         driver.get(url);
 
@@ -59,7 +74,6 @@ public class HomePage {
 
         System.out.println(browser + " test finished");
 
-        driver.quit();
     }
 
     private static WebDriver getDriver(String browser) {
@@ -70,6 +84,12 @@ public class HomePage {
         } else {
             throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
+    }
+
+    public void getBrowsers() {
+        Properties properties = loadProperties("config.properties");
+        String browserList = properties.getProperty("browsers");
+        browsers = Arrays.asList(browserList.split(","));
     }
 
     private static Properties loadProperties(String fileName) {
