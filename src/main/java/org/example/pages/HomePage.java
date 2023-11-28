@@ -60,11 +60,11 @@ public class HomePage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.titleContains("Вхід"));
 
-        WebElement loginField = driver.findElement(By.xpath("//*[@id=\"login\"]"));
-        loginField.sendKeys(login);
+        WebElement loginInputField = driver.findElement(By.xpath("//*[@id='login']"));
+        loginInputField.sendKeys(login);
 
-        WebElement passwordField = driver.findElement(By.xpath("//*[@id=\"password\"]"));
-        passwordField.sendKeys(password);
+        WebElement passwordInputField = driver.findElement(By.xpath("//*[@id='password']"));
+        passwordInputField.sendKeys(password);
 
         WebElement loginButton = driver.findElement(By.name("login-button"));
         loginButton.click();
