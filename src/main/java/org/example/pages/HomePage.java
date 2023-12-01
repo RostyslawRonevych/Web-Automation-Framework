@@ -1,9 +1,12 @@
 package org.example.pages;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.After;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterEach;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,29 +28,32 @@ public class HomePage {
     Properties properties;
     List<String> browsers;
     WebDriver driver;
-    @Before
+    @BeforeEach
     public void setUp() {
         properties = loadProperties("config.properties");
-        getBrowsers();
+        //      Commented to keep the code here before deletion
+        //      getBrowsers();
     }
 
 
-    @Test
-    public void runChromeTests() {
-        loginTest(browsers.get(0), properties);
+    @ParameterizedTest
+    @ValueSource(strings = {"chrome", "firefox"})
+    public void loginTests(String browserName) {
+        loginTest(browserName);
     }
 
-    @Test
-    public void runMozillaTests() {
-        loginTest(browsers.get(1), properties);
-    }
+    //      Commented to keep the code here before deletion
+//    @Test
+//    public void mozillaLoginTests() {
+//        loginTest(browsers.get(1));
+//    }
 
-    @After
+    @AfterEach
     public void finish(){
         driver.quit();
     }
 
-    private void loginTest(String browser, Properties properties) {
+    private void loginTest(String browser) {
         String url = properties.getProperty("url");
         String login = properties.getProperty("login");
         String password = properties.getProperty("password");
@@ -70,7 +76,7 @@ public class HomePage {
         loginButton.click();
 
         String currentUrl = driver.getCurrentUrl();
-        Assert.assertEquals(currentUrl, targetUrl);
+        Assertions.assertEquals(currentUrl, targetUrl);
 
         System.out.println(browser + " test finished");
 
@@ -85,12 +91,12 @@ public class HomePage {
             throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
     }
-
-    public void getBrowsers() {
-        Properties properties = loadProperties("config.properties");
-        String browserList = properties.getProperty("browsers");
-        browsers = Arrays.asList(browserList.split(","));
-    }
+//      Commented to keep the code here before deletion
+//    public void getBrowsers() {
+//        Properties properties = loadProperties("config.properties");
+//        String browserList = properties.getProperty("browsers");
+//        browsers = Arrays.asList(browserList.split(","));
+//    }
 
     private static Properties loadProperties(String fileName) {
         Properties properties = new Properties();
