@@ -31,8 +31,6 @@ public class HomePage {
     @BeforeEach
     public void setUp() {
         properties = loadProperties("config.properties");
-        //      Commented to keep the code here before deletion
-        //      getBrowsers();
     }
 
 
@@ -42,11 +40,6 @@ public class HomePage {
         loginTest(browserName);
     }
 
-    //      Commented to keep the code here before deletion
-//    @Test
-//    public void mozillaLoginTests() {
-//        loginTest(browsers.get(1));
-//    }
 
     @AfterEach
     public void finish(){
@@ -64,12 +57,12 @@ public class HomePage {
         driver.get(url);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.titleContains("Вхід"));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("login-form")));
 
-        WebElement loginInputField = driver.findElement(By.xpath("//*[@id='login']"));
+        WebElement loginInputField = driver.findElement(By.id("login"));
         loginInputField.sendKeys(login);
 
-        WebElement passwordInputField = driver.findElement(By.xpath("//*[@id='password']"));
+        WebElement passwordInputField = driver.findElement(By.id("password"));
         passwordInputField.sendKeys(password);
 
         WebElement loginButton = driver.findElement(By.name("login-button"));
@@ -91,12 +84,6 @@ public class HomePage {
             throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
     }
-//      Commented to keep the code here before deletion
-//    public void getBrowsers() {
-//        Properties properties = loadProperties("config.properties");
-//        String browserList = properties.getProperty("browsers");
-//        browsers = Arrays.asList(browserList.split(","));
-//    }
 
     private static Properties loadProperties(String fileName) {
         Properties properties = new Properties();
