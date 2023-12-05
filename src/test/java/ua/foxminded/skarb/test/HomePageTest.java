@@ -1,3 +1,5 @@
+package ua.foxminded.skarb.test;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 
@@ -18,8 +20,6 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 
-
-
 public class HomePageTest {
     Properties properties;
     List<String> browsers;
@@ -29,17 +29,10 @@ public class HomePageTest {
         properties = loadProperties("config.properties");
     }
 
-
     @ParameterizedTest
     @ValueSource(strings = {"chrome", "firefox"})
     public void loginTests(String browserName) {
         loginTest(browserName);
-    }
-
-
-    @AfterEach
-    public void finish(){
-        driver.quit();
     }
 
     private void loginTest(String browser) {
@@ -93,6 +86,11 @@ public class HomePageTest {
             ex.printStackTrace();
         }
         return properties;
+    }
+
+    @AfterEach
+    public void finish(){
+        driver.quit();
     }
 }
 
