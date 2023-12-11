@@ -1,5 +1,6 @@
 package ua.foxminded.skarb.test;
 
+import dev.failsafe.internal.util.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 
@@ -35,14 +36,33 @@ public class VolunteerCreationPageTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/volunteers_provider.csv")
-    public void volunteerRegTests(String firstName, String lastName, String phone, int gender, int language, String password, String confirmPassword, String description, int category) throws IOException {
-        volunteerRegistrationTest(firstName, lastName, phone, gender, language, password, confirmPassword, description, category);
+    @CsvFileSource(resources = "/volunteers_provider.csv", numLinesToSkip = 1)
+    public void volunteerRegTests(String caseName, String firstName, String lastName, String mailtype, String phone, int gender, int language, String password, String confirmPassword, String description, int category, String caseType) throws IOException {
+        volunteerRegistrationTest(caseName, firstName, lastName, mailtype, phone, gender, language, password, confirmPassword, description, category, caseType);
     }
 
-    private void volunteerRegistrationTest(String firstName, String lastName, String phone, int gender, int language, String password, String confirmPassword, String description, int category) throws IOException {
+    private void volunteerRegistrationTest(String caseName, String firstName, String lastName, String mailtype, String phone, int gender, int language, String password, String confirmPassword, String description, int category, String caseType) throws IOException {
         String mailHogUrl = properties.getProperty("mailUrl");
         String volunteerRegPage = properties.getProperty("volunteerRegistrationPage");
+
+        if ("NULL".equals(firstName)) {
+            firstName = "";
+        }
+        if ("NULL".equals(lastName)) {
+            lastName = "";
+        }
+        if ("NULL".equals(phone)) {
+            phone = "";
+        }
+        if ("NULL".equals(password)) {
+            password = "";
+        }
+        if ("NULL".equals(confirmPassword)) {
+            confirmPassword = "";
+        }
+        if ("NULL".equals(description)) {
+            description = "";
+        }
 
         driver = getDriver("chrome");
 
@@ -73,7 +93,7 @@ public class VolunteerCreationPageTest {
 
         firstNameField.sendKeys(firstName);
         lastNameField.sendKeys(lastName);
-        emailField.sendKeys(generateMail());
+        emailField.sendKeys(generateMail(mailtype));
         phoneField.sendKeys(phone);
         genDropdown.selectByIndex(gender);
         langDropdown.selectByIndex(language);
@@ -82,6 +102,15 @@ public class VolunteerCreationPageTest {
         descriptionField.sendKeys(description);
         catDropdown.selectByIndex(category);
 
+        submitButton.click();
+
+        WebElement successMessage = driver.findElement(By.name("message"));
+        if (caseType.equals("Positive")){
+            Assertions.assertTrue(successMessage.isDisplayed());
+        }
+        else if (caseType.equals("Negative")) {
+            Assertions.assertFalse(successMessage.isDisplayed());
+        }
     }
 
     private static WebDriver getDriver(String browser) {
@@ -108,25 +137,39 @@ public class VolunteerCreationPageTest {
         return properties;
     }
 
-    public static String generateMail() throws IOException {
-        Properties properties = new Properties();
+    public static String generateMail(String mailType) throws IOException {
         String email = "";
+        if (mailType.equals("valid")) {
+            Properties properties = new Properties();
 
-        FileInputStream fileInputStream = new FileInputStream("src\\main\\resources\\config.properties");
-        properties.load(fileInputStream);
-        fileInputStream.close();
+            FileInputStream fileInputStream = new FileInputStream("src\\main\\resources\\config.properties");
+            properties.load(fileInputStream);
+            fileInputStream.close();
 
-        String lastUsedMail = properties.getProperty("lastUsedMail");
-        int lastMailNumber = Integer.parseInt(lastUsedMail);
-        email = "skarbmail" + lastUsedMail + "@mailinator.com";
+            String lastUsedMail = properties.getProperty("lastUsedMail");
+            int lastMailNumber = Integer.parseInt(lastUsedMail);
+            email = "skarbmail" + lastUsedMail + "@mailinator.com";
 
-        lastMailNumber++;
+            lastMailNumber++;
 
-        properties.setProperty("lastUsedMail", String.valueOf(lastMailNumber));
+            properties.setProperty("lastUsedMail", String.valueOf(lastMailNumber));
 
-        FileOutputStream fileOutputStream = new FileOutputStream("src\\main\\resources\\config.properties");
-        properties.store(fileOutputStream, null);
-        fileOutputStream.close();
+            FileOutputStream fileOutputStream = new FileOutputStream("src\\main\\resources\\config.properties");
+            properties.store(fileOutputStream, null);
+            fileOutputStream.close();
+        }
+        else if (mailType.equals("invalid")) {
+            email = "invalidMail";
+        }
+        else if (mailType.equals("registered")) {
+            email = "skarbmail10@mailinator.com";
+        }
+        else if (mailType.equals("empty")) {
+            email = "";
+        }
+        else {
+            System.out.println("Invalid mailtype argument");
+        }
 
         return email;
     }
