@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -37,7 +38,15 @@ public class VolunteerCreationPageTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/volunteers_provider.csv", numLinesToSkip = 1)
-    public void volunteerRegTests(String caseName, String firstName, String lastName, String mailtype, String phone, int gender, int language, String password, String confirmPassword, String description, int category, String caseType) throws IOException {
+    public void firefoxVolunteerRegTests(String caseName, String firstName, String lastName, String mailtype, String phone, int gender, int language, String password, String confirmPassword, String description, int category, String caseType) throws IOException {
+        driver = getDriver("firefox");
+        volunteerRegistrationTest(caseName, firstName, lastName, mailtype, phone, gender, language, password, confirmPassword, description, category, caseType);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/volunteers_provider.csv", numLinesToSkip = 1)
+    public void chromeVolunteerRegTests(String caseName, String firstName, String lastName, String mailtype, String phone, int gender, int language, String password, String confirmPassword, String description, int category, String caseType) throws IOException {
+        driver = getDriver("chrome");
         volunteerRegistrationTest(caseName, firstName, lastName, mailtype, phone, gender, language, password, confirmPassword, description, category, caseType);
     }
 
@@ -64,7 +73,7 @@ public class VolunteerCreationPageTest {
             description = "";
         }
 
-        driver = getDriver("chrome");
+//        driver = getDriver(browser);
 
         driver.get(volunteerRegPage);
 
@@ -76,7 +85,7 @@ public class VolunteerCreationPageTest {
         WebElement emailField = driver.findElement(By.id("email"));
         WebElement phoneField = driver.findElement(By.id("phoneNumber"));
 
-        WebElement genderDropdown = driver.findElement(By.id("sex"));
+        WebElement genderDropdown = driver.findElement(By.name("sex"));
         Select genDropdown = new Select(genderDropdown);
 
         WebElement languageDropdown = driver.findElement(By.id("language"));
@@ -104,12 +113,17 @@ public class VolunteerCreationPageTest {
 
         submitButton.click();
 
-        WebElement successMessage = driver.findElement(By.name("message"));
-        if (caseType.equals("Positive")){
-            Assertions.assertTrue(successMessage.isDisplayed());
+        WebElement successMessage = null;
+        try {
+            successMessage = driver.findElement(By.name("message"));
+        } catch (NoSuchElementException e) {
+            // If the element is not found, proceed as needed for Negative case
         }
-        else if (caseType.equals("Negative")) {
-            Assertions.assertFalse(successMessage.isDisplayed());
+
+        if (caseType.equals("Positive")) {
+            Assertions.assertTrue(successMessage != null && successMessage.isDisplayed());
+        } else if (caseType.equals("Negative")) {
+            Assertions.assertTrue(successMessage == null || !successMessage.isDisplayed());
         }
     }
 
@@ -172,5 +186,10 @@ public class VolunteerCreationPageTest {
         }
 
         return email;
+    }
+
+    @AfterEach
+    public void finish(){
+        driver.quit();
     }
 }

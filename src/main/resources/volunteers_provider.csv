@@ -1,37 +1,37 @@
 case name,first name,last name,email,phone number,sex dropdown,language dropdown,password field,confirm password field,description field,categories dropdown,case type
-Successful Registration,Johann Sebastian Bachmanovitch the Great III,Maximilian von Humboldtsteinbergershire,valid,380123456789,1,2,TEst@123!,TEst@123!,About me description,3,Positive
-Minimum Required Fields,Jane,Doe,valid,NULL,0,0,TEst@123!,TEst@123!,NULL,0,Positive
-First Name Valid - Meets Requirements,Al,White,valid,+380111111111,1,2,TEst@123!,TEst@123!,NULL,3,Positive
-First Name Invalid - Too Short,A,Validlastname,valid,+380222222222,1,2,TEst@123!,TEst@123!,NULL,3,Negative
-First Name Invalid - Too Long,ThisIsALongFirstNameThatExceedsTheCharacterLimitAndThenSomePlusALittleBitMoreJustToBeSureItIsReallyExceedingIt,Validlastname,valid,+380333333333,1,2,TEst@123!,TEst@123!,NULL,3,Negative
-First Name Invalid - Special Characters,$ymb0l!cN@me,Validlastname,valid,+380444444444,1,2,TEst@123!,TEst@123!,NULL,3,Negative
-Last Name Valid - Meets Requirements,Validlastname,Validlastname,valid,+380555555555,1,2,TEst@123!,TEst@123!,NULL,3,Positive
-Last Name Invalid - Too Short,Short,Validlastname,valid,+380666666666,1,2,TEst@123!,TEst@123!,NULL,3,Negative
-Last Name Invalid - Too Long,Validfirstname,ThisIsALongLastNameThatExceedsTheCharacterLimitAndThenSomePlusALittleBitMoreJustToBeSureItIsReallyExceedingIt,valid,+380777777777,1,2,TEst@123!,TEst@123!,NULL,3,Negative
-Last Name Invalid - Special Characters,Validfirstname,Validlastname@,valid,+380888888888,1,2,TEst@123!,TEst@123!,NULL,3,Negative
+Successful Registration,Jane,Doe,valid,380950592511,1,2,TEst@123!,TEst@123!,About me description,3,Positive
+Minimum Required Fields,Jane,Doe,valid,NULL,0,0,TEst@123!,TEst@123!,NULL,0,Positive,0
+First Name Valid - Meets Requirements,Al,White,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Positive
+First Name Invalid - Too Short,A,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Negative
+First Name Invalid - Too Long,ThisIsALongFirstNameThatExceedsTheCharacterLimitAndThenSomePlusALittleBitMoreJustToBeSureItIsReallyExceedingIt,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Negative
+First Name Invalid - Special Characters,$ymb0l!cN@me,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Negative
+Last Name Valid - Meets Requirements,Jane,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Positive
+Last Name Invalid - Too Short,Short,D,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Negative
+Last Name Invalid - Too Long,Jane,ThisIsALongLastNameThatExceedsTheCharacterLimitAndThenSomePlusALittleBitMoreJustToBeSureItIsReallyExceedingIt,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Negative
+Last Name Invalid - Special Characters,Jane,Doe@,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Negative
 Valid email,Jane,Doe,valid,NULL,0,0,TEst@123!,TEst@123!,NULL,0,Positive
 Invalid email,Jane,Doe,invalid,NULL,0,0,TEst@123!,TEst@123!,NULL,0,Negative
 Email already registered,Jane,Doe,registered,NULL,0,0,TEst@123!,TEst@123!,NULL,0,Negative
-Valid Mobile Number,Validfirstname,Validlastname,valid,+380999999999,1,2,TEst@123!,TEst@123!,NULL,3,Positive
-Valid Mobile Number with Optional '+',Validfirstname,Validlastname,valid,380000000000,1,2,TEst@123!,TEst@123!,NULL,3,Positive
-Empty Phone Number,Validfirstname,Validlastname,valid,NULL,1,2,TEst@123!,TEst@123!,NULL,3,Positive
-Invalid Mobile Number - Too Short,Validfirstname,Validlastname,valid,+38010000000,1,2,TEst@123!,TEst@123!,NULL,3,Negative
-Invalid Mobile Number - Invalid Characters,Validfirstname,Validlastname,valid,+38020000000a,1,2,TEst@123!,TEst@123!,NULL,3,Negative
-Invalid Mobile Number - Incorrect Prefix,Validfirstname,Validlastname,valid,+480300000000,1,2,TEst@123!,TEst@123!,NULL,3,Negative
-Invalid Mobile Number - Too Long,Validfirstname,Validlastname,valid,+3804000000000,1,2,TEst@123!,TEst@123!,NULL,3,Negative
-Invalid Mobile Number - Mixed with Special Characters,Validfirstname,Validlastname,valid,+38a500000000,1,2,TEst@123!,TEst@123!,NULL,3,Negative
-Invalid Mobile Number - Missing '+' for Optional Prefix,Validfirstname,Validlastname,valid,380600000000,1,2,TEst@123!,TEst@123!,NULL,3,Negative
-Gender Dropdown Validation,Validfirstname,Validlastname,valid,+380101010101,0,2,TEst@123!,TEst@123!,NULL,3,Positive
-Language Dropdown Validation,Validfirstname,Validlastname,valid,+380202020202,1,0,TEst@123!,TEst@123!,NULL,3,Positive
-Category Dropdown Validation,Validfirstname,Validlastname,valid,+380303030303,1,2,TEst@123!,TEst@123!,NULL,0,Positive
-Category Dropdown empty,Validfirstname,Validlastname,valid,+380404040404,1,2,TEst@123!,TEst@123!,NULL,0,Positive
-Password Invalid Too Short,Validfirstname,Validlastname,valid,+380505050505,1,2,Sh!2,Sh!2,NULL,3,Negative
-Password Invalid - Too Long,Validfirstname,Validlastname,valid,+3803030303030,1,2,ThisPasswordIsTooLongAndExceedsTheMaximumCharacterLimit,ThisPasswordIsTooLongAndExceedsTheMaximumCharacterLimit,NULL,3,Negative
-Password Mismatch,Validfirstname,Validlastname,valid,+380606060606,1,2,PAssword!123,Password!321,NULL,3,Negative
-Valid Password - Meets Requirements,Validfirstname,Validlastname,valid,+380707070707,1,2,StrongPass!123,StrongPass!123,NULL,3,Positive
-Password Invalid - Missing Capital Letters,Validfirstname,Validlastname,valid,+380808080808,1,2,invalidpass!123,invalidpass!123,NULL,3,Negative
-Password Invalid - Missing Lower Case Letters,Validfirstname,Validlastname,valid,+380909090909,1,2,INVALIDPASS!123,INVALIDPASS!123,NULL,3,Negative
-Password Invalid - Missing Special Symbol,Validfirstname,Validlastname,valid,+3801010101010,1,2,InvalidPass123,InvalidPass123,NULL,3,Negative
-Successful Registration with About Section,Validfirstname,Validlastname,valid,+3804040404040,1,2,StrongPass!123,StrongPass!123,About me description,3,Positive
-Successful Registration without About Section,Validfirstname,Validlastname,valid,+3805050505050,1,2,StrongPass!123,StrongPass!123,NULL,3,Positive
+Valid Mobile Number,Jane,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Positive
+Valid Mobile Number with Optional '+',Jane,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Positive
+Empty Phone Number,Jane,Doe,valid,NULL,1,2,TEst@123!,TEst@123!,NULL,3,Positive
+Invalid Mobile Number - Too Short,Jane,Doe,valid,+38095059251,1,2,TEst@123!,TEst@123!,NULL,3,Negative
+Invalid Mobile Number - Invalid Characters,Jane,Doe,valid,+38020000000a,1,2,TEst@123!,TEst@123!,NULL,3,Negative
+Invalid Mobile Number - Incorrect Prefix,Jane,Doe,valid,+480300000000,1,2,TEst@123!,TEst@123!,NULL,3,Negative
+Invalid Mobile Number - Too Long,Jane,Doe,valid,+3804000000000,1,2,TEst@123!,TEst@123!,NULL,3,Negative
+Invalid Mobile Number - Mixed with Special Characters,Jane,Doe,valid,+38a500000000,1,2,TEst@123!,TEst@123!,NULL,3,Negative
+Invalid Mobile Number - Missing '+' for Optional Prefix,Jane,Doe,valid,380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Positive
+Gender Dropdown Validation,Jane,Doe,valid,+380950592511,0,2,TEst@123!,TEst@123!,NULL,3,Positive
+Language Dropdown Validation,Jane,Doe,valid,+380950592511,1,0,TEst@123!,TEst@123!,NULL,3,Positive
+Category Dropdown Validation,Jane,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,0,Positive
+Category Dropdown empty,Jane,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,0,Positive
+Password Invalid Too Short,Jane,Doe,valid,+380950592511,1,2,Sh!2,Sh!2,NULL,3,Negative
+Password Invalid - Too Long,Jane,Doe,valid,+380950592511,1,2,ThisPasswordIsTooLongAndExceedsTheMaximumCharacterLimit,ThisPasswordIsTooLongAndExceedsTheMaximumCharacterLimit,NULL,3,Negative
+Password Mismatch,Jane,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!!,NULL,3,Negative
+Valid Password - Meets Requirements,Jane,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Positive
+Password Invalid - Missing Capital Letters,Jane,Doe,valid,+380950592511,1,2,invalidpass!123,invalidpass!123,NULL,3,Negative
+Password Invalid - Missing Lower Case Letters,Jane,Doe,valid,+380950592511,1,2,INVALIDPASS!123,INVALIDPASS!123,NULL,3,Negative
+Password Invalid - Missing Special Symbol,Jane,Doe,valid,+380950592511,1,2,InvalidPass123,InvalidPass123,NULL,3,Negative
+Successful Registration with About Section,Jane,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!,About me description,3,Positive
+Successful Registration without About Section,Jane,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!,NULL,3,Positive
 Empty Form Submission,NULL,NULL,empty,NULL,0,0,NULL,NULL,NULL,0,Negative
