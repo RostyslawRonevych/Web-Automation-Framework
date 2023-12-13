@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriver.Navigation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -73,9 +74,8 @@ public class VolunteerCreationPageTest {
             description = "";
         }
 
-//        driver = getDriver(browser);
-
         driver.get(volunteerRegPage);
+        driver.manage().window().maximize();
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("registration-form")));
@@ -88,7 +88,7 @@ public class VolunteerCreationPageTest {
         WebElement genderDropdown = driver.findElement(By.name("sex"));
         Select genDropdown = new Select(genderDropdown);
 
-        WebElement languageDropdown = driver.findElement(By.id("language"));
+        WebElement languageDropdown = driver.findElement(By.name("sex"));
         Select langDropdown = new Select(languageDropdown);
 
         WebElement passwordField = driver.findElement(By.id("password"));
