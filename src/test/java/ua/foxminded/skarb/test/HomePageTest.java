@@ -2,7 +2,7 @@ package ua.foxminded.skarb.test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
-
+import utilities.TestUtilities;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,8 +14,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
@@ -26,7 +24,7 @@ public class HomePageTest {
     WebDriver driver;
     @BeforeEach
     public void setUp() {
-        properties = loadProperties("config.properties");
+        properties = TestUtilities.loadProperties("config.properties");
     }
 
     @ParameterizedTest
@@ -72,20 +70,6 @@ public class HomePageTest {
         } else {
             throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
-    }
-
-    private static Properties loadProperties(String fileName) {
-        Properties properties = new Properties();
-        try (InputStream input = HomePageTest.class.getClassLoader().getResourceAsStream(fileName)) {
-            if (input == null) {
-                System.out.println("Sorry, unable to find " + fileName);
-                return properties;
-            }
-            properties.load(input);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return properties;
     }
 
     @AfterEach

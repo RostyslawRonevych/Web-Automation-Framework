@@ -1,17 +1,14 @@
 package ua.foxminded.skarb.test;
 
-import dev.failsafe.internal.util.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
-
+import utilities.TestUtilities;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriver.Navigation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -22,7 +19,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
@@ -34,20 +30,13 @@ public class VolunteerCreationPageTest {
 
     @BeforeEach
     public void setUp() {
-        properties = loadProperties("config.properties");
+        properties = TestUtilities.loadProperties("config.properties");
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/volunteers_provider.csv", numLinesToSkip = 1)
-    public void firefoxVolunteerRegTests(String caseName, String firstName, String lastName, String mailtype, String phone, int gender, int language, String password, String confirmPassword, String description, int category, String caseType) throws IOException {
-        driver = getDriver("firefox");
-        volunteerRegistrationTest(caseName, firstName, lastName, mailtype, phone, gender, language, password, confirmPassword, description, category, caseType);
-    }
-
-    @ParameterizedTest
-    @CsvFileSource(resources = "/volunteers_provider.csv", numLinesToSkip = 1)
-    public void chromeVolunteerRegTests(String caseName, String firstName, String lastName, String mailtype, String phone, int gender, int language, String password, String confirmPassword, String description, int category, String caseType) throws IOException {
-        driver = getDriver("chrome");
+    public void volunteerRegTests(String caseName, String firstName, String lastName, String mailtype, String phone, int gender, int language, String password, String confirmPassword, String description, int category, String caseType) throws IOException {
+        driver = TestUtilities.getDriver("chrome");
         volunteerRegistrationTest(caseName, firstName, lastName, mailtype, phone, gender, language, password, confirmPassword, description, category, caseType);
     }
 
@@ -127,29 +116,6 @@ public class VolunteerCreationPageTest {
         }
     }
 
-    private static WebDriver getDriver(String browser) {
-        if ("chrome".equalsIgnoreCase(browser)) {
-            return new ChromeDriver();
-        } else if ("firefox".equalsIgnoreCase(browser)) {
-            return new FirefoxDriver();
-        } else {
-            throw new IllegalArgumentException("Unsupported browser: " + browser);
-        }
-    }
-
-    private static Properties loadProperties(String fileName) {
-        Properties properties = new Properties();
-        try (InputStream input = HomePageTest.class.getClassLoader().getResourceAsStream(fileName)) {
-            if (input == null) {
-                System.out.println("Sorry, unable to find " + fileName);
-                return properties;
-            }
-            properties.load(input);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return properties;
-    }
 
     public static String generateMail(String mailType) throws IOException {
         String email = "";
@@ -162,7 +128,7 @@ public class VolunteerCreationPageTest {
 
             String lastUsedMail = properties.getProperty("lastUsedMail");
             int lastMailNumber = Integer.parseInt(lastUsedMail);
-            email = "skarbmail" + lastUsedMail + "@mailinator.com";
+            email = "skarbmail" + lastUsedMail + "@testing.com";
 
             lastMailNumber++;
 
