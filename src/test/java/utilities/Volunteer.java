@@ -19,6 +19,8 @@ public class Volunteer {
     }
 
     public String generateFirstName(int length) {
+        String firstNameValue = null;
+
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -28,12 +30,14 @@ public class Volunteer {
             stringBuilder.append(randomChar);
         }
 
-        firstName = stringBuilder.toString();
+        firstNameValue = stringBuilder.toString();
 
-        return firstName;
+        return firstNameValue;
     }
 
     public String generateLastName(int length) {
+        String lastNameValue = null;
+
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -43,12 +47,14 @@ public class Volunteer {
             stringBuilder.append(randomChar);
         }
 
-        lastName = stringBuilder.toString();
+        lastNameValue = stringBuilder.toString();
 
-        return lastName;
+        return lastNameValue;
     }
 
     public String generatePassword(int lowercaseCount, int uppercaseCount, int specialSymbolCount){
+        String passwordValue = null;
+
         String LOWERCASE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
         String UPPERCASE_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String SPECIAL_SYMBOLS = "!@#$%^&*()-_=+[{]};:',<.>/?";
@@ -81,22 +87,25 @@ public class Volunteer {
             passwordArray[i] = temp;
         }
         
-        password = passwordArray.toString();
+        passwordValue = passwordArray.toString();
 
-        return password;
+        return passwordValue;
     }
     
     public String generateConfirmPassword(int type){
+        String confirmPasswordValue = null;
         if (type == 1){
-            confirmPassword = password;
+            confirmPasswordValue = password;
         }
         else if (type == 2) {
-            confirmPassword = generatePassword(5, 4,1);
+            confirmPasswordValue = generatePassword(5, 4,1);
         }
-        return confirmPassword;
+        return confirmPasswordValue;
     }
 
     public String generatePhone(int additionalDigits){
+        String phoneValue = null;
+
         SecureRandom random = new SecureRandom();
         StringBuilder phoneNumberBuilder = new StringBuilder("+3809");
 
@@ -104,8 +113,29 @@ public class Volunteer {
             int randomDigit = random.nextInt(10); // Random digit from 0 to 9
             phoneNumberBuilder.append(randomDigit);
         }
-        phone = phoneNumberBuilder.toString();
 
-        return phone;
+        phoneValue = phoneNumberBuilder.toString();
+
+        return phoneValue;
+    }
+
+    public String getFirstName(){
+        return this.firstName;
+    }
+
+    public String getLastName(){
+        return this.lastName;
+    }
+
+    public String getPhone(){
+        return this.phone;
+    }
+
+    public String getPassword(){
+        return this.password;
+    }
+
+    public String getConfirmPassword(){
+        return this.confirmPassword;
     }
 }
