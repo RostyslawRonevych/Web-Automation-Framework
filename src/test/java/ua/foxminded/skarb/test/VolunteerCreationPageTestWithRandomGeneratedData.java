@@ -1,14 +1,12 @@
 package ua.foxminded.skarb.test;
 
-import dev.failsafe.internal.util.Assert;
-import org.instancio.Instancio;
+import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.provider.MethodSource;
 import utilities.TestUtilities;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -16,17 +14,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.Volunteer;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.time.Duration;
-import java.util.List;
 import java.util.Properties;
 
+@ExtendWith(InstancioExtension.class)
 public class VolunteerCreationPageTestWithRandomGeneratedData {
     Properties properties;
     WebDriver driver;
@@ -36,12 +29,11 @@ public class VolunteerCreationPageTestWithRandomGeneratedData {
         properties = TestUtilities.loadProperties("config.properties");
     }
 
-    @Test
-    public void randomVolunteerRegTest(){
+    @ParameterizedTest
+    @MethodSource("utilities.TestUtilities#createVolunteerStreamValid")
+    public void randomVolunteerRegTest(Volunteer volunteer){
         driver = TestUtilities.getDriver("chrome");
-        Volunteer volunteer = Instancio.create(Volunteer.class);
         registrationTest(volunteer);
-        Assertions.assertEquals(volunteer.getPassword(), volunteer.getConfirmPassword());
     }
 
     private void registrationTest(Volunteer volunteer){
@@ -55,30 +47,29 @@ public class VolunteerCreationPageTestWithRandomGeneratedData {
         WebElement lastNameField = driver.findElement(By.id("lastName"));
         WebElement emailField = driver.findElement(By.id("email"));
         WebElement phoneField = driver.findElement(By.id("phoneNumber"));
-
-        WebElement genderDropdown = driver.findElement(By.name("sex"));
-        Select genDropdown = new Select(genderDropdown);
-
-        WebElement languageDropdown = driver.findElement(By.name("sex"));
-        Select langDropdown = new Select(languageDropdown);
-
         WebElement passwordField = driver.findElement(By.id("password"));
         WebElement confirmPasswordField = driver.findElement(By.id("confirmPassword"));
-        WebElement descriptionField = driver.findElement(By.id("about"));
-
-        WebElement categoryDropdown = driver.findElement(By.id("categories"));
-        Select catDropdown = new Select(categoryDropdown);
-
         WebElement submitButton = driver.findElement(By.name("submit"));
 
         firstNameField.sendKeys(volunteer.getFirstName());
         lastNameField.sendKeys(volunteer.getLastName());
+        emailField.sendKeys(volunteer.getEmail());
         phoneField.sendKeys(volunteer.getPhone());
         passwordField.sendKeys(volunteer.getPassword());
-        confirmPasswordField.sendKeys(volunteer.getConfirmPassword());
+        confirmPasswordField.sendKeys(volunteer.getPassword());
 
-        System.out.println(volunteer.getPassword());
-        System.out.println(volunteer.getConfirmPassword());
+        submitButton.click();
+
+        WebElement successMessage = null;
+        try {
+            successMessage = driver.findElement(By.name("message"));
+        } catch (NoSuchElementException e) {
+            // If the element is not found, proceed as needed for Negative case
+        }
+
+        Assertions.assertTrue(successMessage != null && successMessage.isDisplayed());
+
+
 
 
     }

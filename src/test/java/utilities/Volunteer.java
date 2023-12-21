@@ -6,6 +6,7 @@ import java.util.Random;
 public class Volunteer {
     String firstName;
     String lastName;
+    String email;
     String phone;
     String password;
     String confirmPassword;
@@ -125,6 +126,10 @@ public class Volunteer {
 
     public String getLastName(){
         return this.lastName;
+    }
+
+    public String getEmail(){
+        return email;
     }
 
     public String getPhone(){
