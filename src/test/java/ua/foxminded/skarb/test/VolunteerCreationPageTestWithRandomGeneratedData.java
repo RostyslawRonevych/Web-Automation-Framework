@@ -11,11 +11,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utilities.Volunteer;
+import Model.Volunteer;
 import java.time.Duration;
 import java.util.Properties;
 
@@ -30,7 +28,7 @@ public class VolunteerCreationPageTestWithRandomGeneratedData {
     }
 
     @ParameterizedTest
-    @MethodSource("utilities.TestUtilities#createVolunteerStreamValid")
+    @MethodSource("Model.Volunteer#createVolunteerStreamValid")
     public void randomVolunteerRegTest(Volunteer volunteer){
         driver = TestUtilities.getDriver("chrome");
         registrationTest(volunteer);

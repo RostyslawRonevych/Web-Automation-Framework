@@ -1,7 +1,12 @@
-package utilities;
+package Model;
 
 import java.security.SecureRandom;
+import org.instancio.Instancio;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
+
+import static org.instancio.Select.field;
 
 public class Volunteer {
     String firstName;
@@ -17,6 +22,19 @@ public class Volunteer {
         this.phone = generatePhone(phoneAdditionalLength);
         this.password = generatePassword(passwordLowerCount, passwordUpperCount, passwordSpecialCount);
         this.confirmPassword = generateConfirmPassword(confirmPasswordType);
+    }
+
+    public static Stream<Volunteer> createVolunteerStreamValid() {
+        List<Volunteer> list = Instancio.ofList(Volunteer.class)
+                .size(1)
+                .generate(field(Volunteer::getFirstName), gen -> gen.text().pattern("#C#c#c#c#c#c"))
+                .generate(field(Volunteer::getLastName), gen -> gen.text().pattern("#C#c#c#c#c#c"))
+                .generate(field(Volunteer::getEmail), gen -> gen.text().pattern("#c#c#c#c#c#c@cskarb.ngo"))
+                .generate(field(Volunteer::getPhone), gen -> gen.text().pattern("+38095#d#d#d#d#d#d#d"))
+                .generate(field(Volunteer::getPassword), gen -> gen.text().pattern("#C#C#d#c#c#a#a#a#a##"))
+                .create();
+        Stream<Volunteer> volunteerStream = list.stream();
+        return volunteerStream;
     }
 
     public String generateFirstName(int length) {
