@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+
 public class TestUtilities {
     public static Properties loadProperties(String fileName) {
         Properties properties = new Properties();
@@ -33,4 +34,6 @@ public class TestUtilities {
             throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
     }
+
+
 }
