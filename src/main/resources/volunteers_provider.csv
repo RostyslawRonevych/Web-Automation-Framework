@@ -1,6 +1,6 @@
 case name,first name,last name,email,phone number,sex dropdown,language dropdown,password field,confirm password field,description field,categories dropdown,case type
-Successful Registration,Jane,Doe,valid,380950592511,1,2,TEst@123!,TEst@123!,About me description,3,Positive
+Successful Registration,Jane,Doe,valid,380950592511,1,1,TEst@123!,TEst@123!,About me description,3,Positive
 Invalid email,Jane,Doe,invalid,NULL,0,0,TEst@123!,TEst@123!,NULL,0,Negative
 Email already registered,Jane,Doe,registered,NULL,0,0,TEst@123!,TEst@123!,NULL,0,Negative
-Gender Dropdown Validation,Jane,Doe,valid,+380950592511,0,2,TEst@123!,TEst@123!,NULL,3,Positive
-Password Mismatch,Jane,Doe,valid,+380950592511,1,2,TEst@123!,TEst@123!!,NULL,3,Negative
+Gender Dropdown Validation,Jane,Doe,valid,+380950592511,0,1,TEst@123!,TEst@123!,NULL,3,Positive
+Password Mismatch,Jane,Doe,valid,+380950592511,1,1,TEst@123!,TEst@123!!,NULL,3,Negative
