@@ -4,6 +4,7 @@ import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.openqa.selenium.support.ui.Select;
 import utilities.TestUtilities;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,10 +16,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import Model.Volunteer;
 import java.time.Duration;
+import java.util.List;
 import java.util.Properties;
 
 @ExtendWith(InstancioExtension.class)
-public class VolunteerCreationPageTestWithRandomGeneratedData {
+public class VolunteerCreationPageTestCombinedSelectors {
     Properties properties;
     WebDriver driver;
 
@@ -29,32 +31,38 @@ public class VolunteerCreationPageTestWithRandomGeneratedData {
 
     @ParameterizedTest
     @MethodSource("Model.Volunteer#createVolunteerStreamValid")
-    public void randomVolunteerRegTest(Volunteer volunteer){
+    public void randomVolunteerRegTest(Volunteer volunteer) {
         driver = TestUtilities.getDriver("chrome");
         registrationTest(volunteer);
     }
 
-    private void registrationTest(Volunteer volunteer){
+    private void registrationTest(Volunteer volunteer) {
         String volunteerRegPage = properties.getProperty("volunteerRegistrationPage");
         driver.get(volunteerRegPage);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("registration-form")));
 
-        WebElement firstNameField = driver.findElement(By.id("firstName"));
-        WebElement lastNameField = driver.findElement(By.id("lastName"));
-        WebElement emailField = driver.findElement(By.id("email"));
-        WebElement phoneField = driver.findElement(By.id("phoneNumber"));
-        WebElement passwordField = driver.findElement(By.id("password"));
-        WebElement confirmPasswordField = driver.findElement(By.id("confirmPassword"));
+        List<WebElement> personalData = driver.findElements(By.xpath("//*[@id='firstName' or @id='lastName']"));
+        WebElement emailField = driver.findElement(By.xpath("//*[@id='email']"));
+        List<WebElement> passwords = driver.findElements(By.cssSelector("input[type=password]"));
+        List<WebElement> dropdownDiv = driver.findElements(By.cssSelector("select.colorful-select"));
         WebElement submitButton = driver.findElement(By.name("submit"));
 
-        firstNameField.sendKeys(volunteer.getFirstName());
-        lastNameField.sendKeys(volunteer.getLastName());
+        for (WebElement personalDatum : personalData) {
+            personalDatum.sendKeys(volunteer.getFirstName());
+        }
+
         emailField.sendKeys(volunteer.getEmail());
-        phoneField.sendKeys(volunteer.getPhone());
-        passwordField.sendKeys(volunteer.getPassword());
-        confirmPasswordField.sendKeys(volunteer.getPassword());
+
+        for (WebElement tempPass : passwords){
+            tempPass.sendKeys(volunteer.getPassword());
+        }
+
+        for (WebElement tempDropdowns : dropdownDiv){
+            Select dropdownField = new Select(tempDropdowns);
+            dropdownField.selectByIndex(volunteer.getGender());
+        }
 
         submitButton.click();
 
@@ -66,6 +74,5 @@ public class VolunteerCreationPageTestWithRandomGeneratedData {
         }
 
         Assertions.assertTrue(successMessage != null && successMessage.isDisplayed());
-
     }
 }
