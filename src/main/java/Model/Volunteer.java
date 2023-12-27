@@ -15,6 +15,8 @@ public class Volunteer {
     String phone;
     String password;
     String confirmPassword;
+    int gender;
+    int language;
 
     public Volunteer(int firstNameLength, int lastNameLength, int phoneAdditionalLength, int passwordLowerCount, int passwordUpperCount, int passwordSpecialCount, int confirmPasswordType) {
         this.firstName = generateFirstName(firstNameLength);
@@ -31,6 +33,8 @@ public class Volunteer {
                 .generate(field(Volunteer::getLastName), gen -> gen.text().pattern("#C#c#c#c#c#c"))
                 .generate(field(Volunteer::getEmail), gen -> gen.text().pattern("#c#c#c#c#c#c@cskarb.ngo"))
                 .generate(field(Volunteer::getPhone), gen -> gen.text().pattern("+38095#d#d#d#d#d#d#d"))
+                .generate(field(Volunteer::getGender), gen -> gen.ints().min(0).max(1))
+                .generate(field(Volunteer::getLanguage), gen -> gen.ints().max(2).min(0))
                 .generate(field(Volunteer::getPassword), gen -> gen.text().pattern("#C#C#d#c#c#a#a#a#a##"))
                 .create();
         Stream<Volunteer> volunteerStream = list.stream();
@@ -160,5 +164,13 @@ public class Volunteer {
 
     public String getConfirmPassword(){
         return this.confirmPassword;
+    }
+
+    public int getGender(){
+        return this.gender;
+    }
+
+    public int getLanguage(){
+        return this.language;
     }
 }
