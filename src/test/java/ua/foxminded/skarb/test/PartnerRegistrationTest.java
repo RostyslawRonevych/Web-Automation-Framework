@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 @ExtendWith(InstancioExtension.class)
 public class PartnerRegistrationTest {
@@ -41,7 +42,7 @@ public class PartnerRegistrationTest {
 
     @ParameterizedTest
     @MethodSource("Model.Partner#createPartnerStreamValid")
-    public void randomVolunteerRegTest(Partner partner) {
+    public void randomPartnerRegTest(Partner partner) {
         driver = TestUtilities.getDriver("chrome");
         mailDriver = TestUtilities.getDriver("chrome");
         registrationTest(partner);
@@ -98,5 +99,18 @@ public class PartnerRegistrationTest {
         aboutOrganization.sendKeys(partner.getAbout());
 
         submitButton.click();
+
+        String mailPage = properties.getProperty("mailUrl");
+        mailDriver.get(mailPage);
+
+        String email = partner.getEmail();
+        WebDriverWait mailWait = new WebDriverWait(mailDriver, Duration.ofSeconds(100));
+        mailWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(), '"+email+"')]")));
+
+        WebElement targetMail = mailDriver.findElement(By.xpath("//div[contains(text(), '"+email+"')]"));
+        targetMail.click();
+
+        WebElement confirmationLink = mailDriver.findElement(By.xpath("//a[contains(text(), 'token')]"));
+        confirmationLink.click();
     }
 }
