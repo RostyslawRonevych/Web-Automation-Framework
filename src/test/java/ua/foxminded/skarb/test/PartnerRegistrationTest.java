@@ -3,18 +3,16 @@ package ua.foxminded.skarb.test;
 import Model.Partner;
 import Model.Volunteer;
 import org.instancio.junit.InstancioExtension;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.openqa.selenium.*;
 import utilities.TestUtilities;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -27,24 +25,23 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 @ExtendWith(InstancioExtension.class)
 public class PartnerRegistrationTest {
     Properties properties;
     WebDriver driver;
-    WebDriver mailDriver;
 
     @BeforeEach
     public void setUp() {
         properties = TestUtilities.loadProperties("config.properties");
+        driver = TestUtilities.getDriver("chrome");
     }
 
     @ParameterizedTest
     @MethodSource("Model.Partner#createPartnerStreamValid")
     public void randomPartnerRegTest(Partner partner) {
-        driver = TestUtilities.getDriver("chrome");
-        mailDriver = TestUtilities.getDriver("chrome");
         registrationTest(partner);
     }
 
@@ -101,16 +98,31 @@ public class PartnerRegistrationTest {
         submitButton.click();
 
         String mailPage = properties.getProperty("mailUrl");
-        mailDriver.get(mailPage);
+        driver.switchTo().newWindow(WindowType.TAB);
+        driver.get(mailPage);
 
         String email = partner.getEmail();
-        WebDriverWait mailWait = new WebDriverWait(mailDriver, Duration.ofSeconds(100));
+        WebDriverWait mailWait = new WebDriverWait(driver, Duration.ofSeconds(100));
         mailWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(), '"+email+"')]")));
 
-        WebElement targetMail = mailDriver.findElement(By.xpath("//div[contains(text(), '"+email+"')]"));
+        WebElement targetMail = driver.findElement(By.xpath("//div[contains(text(), '"+email+"')]"));
         targetMail.click();
 
-        WebElement confirmationLink = mailDriver.findElement(By.xpath("//a[contains(text(), 'token')]"));
+        WebElement confirmationLink = driver.findElement(By.xpath("//a[contains(text(), 'token')]"));
         confirmationLink.click();
+
+        Set<String> windowHandles = driver.getWindowHandles();
+
+        Object[] handlesArray = windowHandles.toArray();
+
+        String lastTabHandle = (String) handlesArray[2];
+        driver.switchTo().window(lastTabHandle);
+
+        WebDriverWait confirmationWait = new WebDriverWait(driver, Duration.ofSeconds(100));
+        confirmationWait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.alert-success")));
+
+        WebElement confirmation = driver.findElement(By.cssSelector("div.alert-success"));
+
+        Assertions.assertNotNull(confirmation);
     }
 }
