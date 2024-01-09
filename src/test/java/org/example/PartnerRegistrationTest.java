@@ -1,4 +1,4 @@
-package ua.foxminded.skarb.test;
+package org.example;
 
 import Model.Partner;
 import Model.Volunteer;
@@ -109,9 +109,7 @@ public class PartnerRegistrationTest {
         confirmationLink.click();
 
         Set<String> windowHandles = driver.getWindowHandles();
-
         Object[] handlesArray = windowHandles.toArray();
-
         String lastTabHandle = (String) handlesArray[2];
         driver.switchTo().window(lastTabHandle);
 

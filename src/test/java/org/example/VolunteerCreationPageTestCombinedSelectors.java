@@ -1,4 +1,4 @@
-package ua.foxminded.skarb.test;
+package org.example;
 
 import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.BeforeEach;

@@ -3,7 +3,7 @@ package utilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import ua.foxminded.skarb.test.HomePageTest;
+import org.example.HomePageTest;
 
 import java.io.IOException;
 import java.io.InputStream;
