@@ -3,14 +3,11 @@ package ua.foxminded.skarb.test;
 import Model.Partner;
 import Model.Volunteer;
 import org.instancio.junit.InstancioExtension;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.*;
 import utilities.TestUtilities;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -30,11 +27,11 @@ import java.util.regex.Pattern;
 
 @ExtendWith(InstancioExtension.class)
 public class PartnerRegistrationTest {
-    Properties properties;
-    WebDriver driver;
+    static Properties properties;
+    static WebDriver driver;
 
-    @BeforeEach
-    public void setUp() {
+    @BeforeAll
+    public static void setUp() {
         properties = TestUtilities.loadProperties("config.properties");
         driver = TestUtilities.getDriver("chrome");
     }
@@ -124,5 +121,10 @@ public class PartnerRegistrationTest {
         WebElement confirmation = driver.findElement(By.cssSelector("div.alert-success"));
 
         Assertions.assertNotNull(confirmation);
+    }
+
+    @AfterAll
+    public static void cleanUp(){
+        driver.quit();
     }
 }
