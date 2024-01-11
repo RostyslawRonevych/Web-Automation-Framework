@@ -1,4 +1,4 @@
-package Model;
+package org.example.Model;
 
 import org.instancio.Instancio;
 import java.util.List;

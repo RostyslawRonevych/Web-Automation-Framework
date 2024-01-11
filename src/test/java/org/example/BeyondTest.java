@@ -1,10 +1,7 @@
 package org.example;
 
-import Model.BeyondAccount;
+import org.example.Model.BeyondAccount;
 import org.openqa.selenium.JavascriptExecutor;
-import Model.Partner;
-import Model.Volunteer;
-import Model.BeyondAccount;
 import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,21 +9,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.*;
 import utilities.TestUtilities;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
-import java.util.regex.Pattern;
 
 
 @ExtendWith(InstancioExtension.class)
@@ -41,7 +29,7 @@ import java.util.regex.Pattern;
         }
 
         @ParameterizedTest
-        @MethodSource("Model.BeyondAccount#createBeyondStreamValid")
+        @MethodSource("org.example.Model.BeyondAccount#createBeyondStreamValid")
         public void accountRegTest(BeyondAccount beyond) {
             registrationTest(beyond);
         }
@@ -74,11 +62,14 @@ import java.util.regex.Pattern;
 
             executor.executeScript("arguments[0].click();", submitButton);
 
+            WebDriverWait dialogWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            dialogWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='dialog']")));
+
         }
 
-//        @AfterAll
-//        public static void cleanUp() {
-//            driver.quit();
-//        }
+        @AfterAll
+        public static void cleanUp() {
+            driver.quit();
+        }
     }
 

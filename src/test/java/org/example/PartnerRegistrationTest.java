@@ -1,7 +1,6 @@
 package org.example;
 
-import Model.Partner;
-import Model.Volunteer;
+import org.example.Model.Partner;
 import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,21 +8,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.*;
 import utilities.TestUtilities;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.time.Duration;
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 @ExtendWith(InstancioExtension.class)
 public class PartnerRegistrationTest {
@@ -37,7 +28,7 @@ public class PartnerRegistrationTest {
     }
 
     @ParameterizedTest
-    @MethodSource("Model.Partner#createPartnerStreamValid")
+    @MethodSource("org.example.Model.Partner#createPartnerStreamValid")
     public void randomPartnerRegTest(Partner partner) {
         registrationTest(partner);
     }
