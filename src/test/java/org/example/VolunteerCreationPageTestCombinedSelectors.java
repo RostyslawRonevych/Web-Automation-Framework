@@ -1,4 +1,4 @@
-package ua.foxminded.skarb.test;
+package org.example;
 
 import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import Model.Volunteer;
+import org.example.Model.Volunteer;
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
@@ -30,7 +30,7 @@ public class VolunteerCreationPageTestCombinedSelectors {
     }
 
     @ParameterizedTest
-    @MethodSource("Model.Volunteer#createVolunteerStreamValid")
+    @MethodSource("org.example.Model.Volunteer#createVolunteerStreamValid")
     public void randomVolunteerRegTest(Volunteer volunteer) {
         driver = TestUtilities.getDriver("chrome");
         registrationTest(volunteer);

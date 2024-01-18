@@ -1,4 +1,4 @@
-package Model;
+package org.example.Model;
 
 import java.security.SecureRandom;
 import org.instancio.Instancio;

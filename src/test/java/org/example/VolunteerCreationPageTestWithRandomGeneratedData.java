@@ -1,4 +1,4 @@
-package ua.foxminded.skarb.test;
+package org.example;
 
 import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +13,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import Model.Volunteer;
+import org.example.Model.Volunteer;
 import java.time.Duration;
 import java.util.Properties;
 
@@ -28,7 +28,7 @@ public class VolunteerCreationPageTestWithRandomGeneratedData {
     }
 
     @ParameterizedTest
-    @MethodSource("Model.Volunteer#createVolunteerStreamValid")
+    @MethodSource("org.example.Model.Volunteer#createVolunteerStreamValid")
     public void randomVolunteerRegTest(Volunteer volunteer){
         driver = TestUtilities.getDriver("chrome");
         registrationTest(volunteer);
@@ -48,6 +48,14 @@ public class VolunteerCreationPageTestWithRandomGeneratedData {
         WebElement passwordField = driver.findElement(By.id("password"));
         WebElement confirmPasswordField = driver.findElement(By.id("confirmPassword"));
         WebElement submitButton = driver.findElement(By.name("submit"));
+
+        Assertions.assertTrue(firstNameField != null && firstNameField.isDisplayed());
+        Assertions.assertTrue(lastNameField != null && lastNameField.isDisplayed());
+        Assertions.assertTrue(emailField != null && emailField.isDisplayed());
+        Assertions.assertTrue(phoneField != null && phoneField.isDisplayed());
+        Assertions.assertTrue(passwordField != null && passwordField.isDisplayed());
+        Assertions.assertTrue(confirmPasswordField != null && confirmPasswordField.isDisplayed());
+        Assertions.assertTrue(submitButton != null && submitButton.isDisplayed());
 
         firstNameField.sendKeys(volunteer.getFirstName());
         lastNameField.sendKeys(volunteer.getLastName());
