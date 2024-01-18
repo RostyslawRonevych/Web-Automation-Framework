@@ -49,6 +49,14 @@ public class VolunteerCreationPageTestWithRandomGeneratedData {
         WebElement confirmPasswordField = driver.findElement(By.id("confirmPassword"));
         WebElement submitButton = driver.findElement(By.name("submit"));
 
+        Assertions.assertTrue(firstNameField != null && firstNameField.isDisplayed());
+        Assertions.assertTrue(lastNameField != null && lastNameField.isDisplayed());
+        Assertions.assertTrue(emailField != null && emailField.isDisplayed());
+        Assertions.assertTrue(phoneField != null && phoneField.isDisplayed());
+        Assertions.assertTrue(passwordField != null && passwordField.isDisplayed());
+        Assertions.assertTrue(confirmPasswordField != null && confirmPasswordField.isDisplayed());
+        Assertions.assertTrue(submitButton != null && submitButton.isDisplayed());
+
         firstNameField.sendKeys(volunteer.getFirstName());
         lastNameField.sendKeys(volunteer.getLastName());
         emailField.sendKeys(volunteer.getEmail());
