@@ -110,7 +110,8 @@ public class VolunteerCreationPageTest {
         }
 
         if (caseType.equals("Positive")) {
-            Assertions.assertTrue(successMessage != null && successMessage.isDisplayed());
+            Assertions.assertTrue(successMessage != null);
+            Assertions.assertTrue(successMessage.isDisplayed());
         } else if (caseType.equals("Negative")) {
             Assertions.assertTrue(successMessage == null || !successMessage.isDisplayed());
         }

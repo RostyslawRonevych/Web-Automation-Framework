@@ -16,6 +16,8 @@ import java.time.Duration;
 import java.util.Properties;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @ExtendWith(InstancioExtension.class)
 public class PartnerRegistrationTest {
     static Properties properties;
@@ -109,11 +111,11 @@ public class PartnerRegistrationTest {
 
         WebElement confirmation = driver.findElement(By.cssSelector("div.alert-success"));
 
-        Assertions.assertNotNull(confirmation);
+        Assertions.assertTrue(confirmation.getText().contains("Email"));
     }
 
-    @AfterAll
-    public static void cleanUp(){
-        driver.quit();
-    }
+//    @AfterAll
+//    public static void cleanUp(){
+//        driver.quit();
+//    }
 }
