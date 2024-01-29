@@ -77,7 +77,7 @@ public class VolunteerCreationPageTest {
         WebElement genderDropdown = driver.findElement(By.name("sex"));
         Select genDropdown = new Select(genderDropdown);
 
-        WebElement languageDropdown = driver.findElement(By.name("sex"));
+        WebElement languageDropdown = driver.findElement(By.name("language"));
         Select langDropdown = new Select(languageDropdown);
 
         WebElement passwordField = driver.findElement(By.id("password"));
