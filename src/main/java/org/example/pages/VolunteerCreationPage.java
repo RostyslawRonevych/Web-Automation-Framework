@@ -2,6 +2,8 @@ package org.example.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -23,11 +25,12 @@ public class VolunteerCreationPage {
     @FindBy(id = "phoneNumber")
     private WebElement phoneNumberFieldElement;
 
-    @FindBy(name = "sex")
-    private Select genderDropdownElement = new Select(driver.findElement(By.name("sex")));
-
-    @FindBy(id = "language")
-    private Select languageDropdownElement = new Select(driver.findElement(By.id("language")));
+    @FindBy(xpath = "//select[@id='sex']")
+    private WebElement genderDropdownElement;
+    private Select sexDropdownSelect;
+    @FindBy(xpath = "//select[@id='language']")
+    private WebElement languageDropdownElement;
+    private Select languageDropdownSelect;
 
     @FindBy(id = "password")
     private WebElement passFieldElement;
@@ -38,8 +41,9 @@ public class VolunteerCreationPage {
     @FindBy(id = "about")
     private WebElement aboutFieldElement;
 
-    @FindBy(id = "language")
-    private Select categoriesDropdownElement = new Select(driver.findElement(By.id("categories")));
+    @FindBy(xpath = "//select[@id='categories']")
+    private WebElement categoriesDropdownElement;
+    private Select categoriesDropdownSelect;
 
     @FindBy(name = "submit")
     private WebElement registerButton;
@@ -47,6 +51,9 @@ public class VolunteerCreationPage {
     public VolunteerCreationPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        sexDropdownSelect = new Select(genderDropdownElement);
+        languageDropdownSelect = new Select(languageDropdownElement);
+        categoriesDropdownSelect = new Select(categoriesDropdownElement);
     }
 
     public void setFirstNameField(String firstName) {
@@ -66,11 +73,11 @@ public class VolunteerCreationPage {
     }
 
     public void setGenderField(int gender) {
-        genderDropdownElement.selectByIndex(gender);
+        sexDropdownSelect.selectByIndex(gender);
     }
 
     public void setLanguageField(int language) {
-        languageDropdownElement.selectByIndex(language);
+        languageDropdownSelect.selectByIndex(language);
     }
 
     public void setPasswordField(String password) {
@@ -82,15 +89,19 @@ public class VolunteerCreationPage {
     }
 
     public void setAboutField (String about) {
-        confirmPassFieldElement.sendKeys(about);
+        aboutFieldElement.sendKeys(about);
     }
 
     public void setCategoriesField(int categories) {
-        languageDropdownElement.selectByIndex(categories);
+        categoriesDropdownSelect.selectByIndex(categories);
     }
 
     public void clickRegister() {
         registerButton.click();
+    }
+
+    public void getPasswordText(){
+        passFieldElement.getText();
     }
 
     // Additional methods for validation, navigation, etc., can be added here

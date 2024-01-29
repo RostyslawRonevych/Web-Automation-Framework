@@ -1,15 +1,13 @@
 package org.example;
 
+import org.example.pages.VolunteerCreationPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.openqa.selenium.*;
 import utilities.TestUtilities;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -69,44 +67,70 @@ public class VolunteerCreationPageTest {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("registration-form")));
 
-        WebElement firstNameField = driver.findElement(By.id("firstName"));
-        WebElement lastNameField = driver.findElement(By.id("lastName"));
-        WebElement emailField = driver.findElement(By.id("email"));
-        WebElement phoneField = driver.findElement(By.id("phoneNumber"));
+        VolunteerCreationPage page = new VolunteerCreationPage(driver);
 
-        WebElement genderDropdown = driver.findElement(By.name("sex"));
-        Select genDropdown = new Select(genderDropdown);
+//        WebElement firstNameField = driver.findElement(By.id("firstName"));
+//        WebElement lastNameField = driver.findElement(By.id("lastName"));
+//        WebElement emailField = driver.findElement(By.id("email"));
+//        WebElement phoneField = driver.findElement(By.id("phoneNumber"));
+//
+//        WebElement genderDropdown = driver.findElement(By.xpath("//select[@id='sex']"));
+//        Select genDropdown = new Select(genderDropdown);
+//
+//        WebElement languageDropdown = driver.findElement(By.xpath("//select[@id='language']"));
+//        Select langDropdown = new Select(languageDropdown);
+//
+//        WebElement passwordField = driver.findElement(By.id("password"));
+//        WebElement confirmPasswordField = driver.findElement(By.id("confirmPassword"));
+//        WebElement descriptionField = driver.findElement(By.id("about"));
+//
+//        WebElement categoryDropdown = driver.findElement(By.xpath("//select[@id='categories']"));
+//        Select catDropdown = new Select(categoryDropdown);
+//
+//        WebElement submitButton = driver.findElement(By.name("submit"));
+//
+//        firstNameField.sendKeys(firstName);
+//        lastNameField.sendKeys(lastName);
+//        emailField.sendKeys(generateMail(mailtype));
+//        phoneField.sendKeys(phone);
+//        genDropdown.selectByIndex(gender);
+//        langDropdown.selectByIndex(language);
+//        passwordField.sendKeys(password);
+//        confirmPasswordField.sendKeys(confirmPassword);
+//        descriptionField.sendKeys(description);
+//        catDropdown.selectByIndex(category);
+//
+//        submitButton.click();
 
-        WebElement languageDropdown = driver.findElement(By.name("language"));
-        Select langDropdown = new Select(languageDropdown);
+        page.setFirstNameField(firstName);
+        page.setLastNameField(lastName);
+        page.setEmailField(generateMail(mailtype));
+        page.setPhoneField(phone);
+        page.setGenderField(gender);
+        page.setLanguageField(language);
+        page.setPasswordField(password);
+        System.out.println(password);
+        page.setConfirmPassword(confirmPassword);
+        System.out.println(confirmPassword);
+        System.out.println(password.equals(confirmPassword));
+        page.setAboutField(description);
+        page.setCategoriesField(category);
 
-        WebElement passwordField = driver.findElement(By.id("password"));
-        WebElement confirmPasswordField = driver.findElement(By.id("confirmPassword"));
-        WebElement descriptionField = driver.findElement(By.id("about"));
+        page.clickRegister();
 
-        WebElement categoryDropdown = driver.findElement(By.id("categories"));
-        Select catDropdown = new Select(categoryDropdown);
 
-        WebElement submitButton = driver.findElement(By.name("submit"));
-
-        firstNameField.sendKeys(firstName);
-        lastNameField.sendKeys(lastName);
-        emailField.sendKeys(generateMail(mailtype));
-        phoneField.sendKeys(phone);
-        genDropdown.selectByIndex(gender);
-        langDropdown.selectByIndex(language);
-        passwordField.sendKeys(password);
-        confirmPasswordField.sendKeys(confirmPassword);
-        descriptionField.sendKeys(description);
-        catDropdown.selectByIndex(category);
-
-        submitButton.click();
 
         WebElement successMessage = null;
         try {
+            WebDriverWait confirmationWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            confirmationWait.until(ExpectedConditions.visibilityOfElementLocated(By.name("message")));
             successMessage = driver.findElement(By.name("message"));
         } catch (NoSuchElementException e) {
             // If the element is not found, proceed as needed for Negative case
+            System.out.println("Couldn't register the account");
+        } catch (TimeoutException e){
+            // if the success message isnt there in time the test will proceed
+            System.out.println("Couldn't register the account");
         }
 
         if (caseType.equals("Positive")) {
