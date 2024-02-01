@@ -69,39 +69,6 @@ public class VolunteerCreationPageTest {
 
         VolunteerCreationPage page = new VolunteerCreationPage(driver);
 
-//        WebElement firstNameField = driver.findElement(By.id("firstName"));
-//        WebElement lastNameField = driver.findElement(By.id("lastName"));
-//        WebElement emailField = driver.findElement(By.id("email"));
-//        WebElement phoneField = driver.findElement(By.id("phoneNumber"));
-//
-//        WebElement genderDropdown = driver.findElement(By.xpath("//select[@id='sex']"));
-//        Select genDropdown = new Select(genderDropdown);
-//
-//        WebElement languageDropdown = driver.findElement(By.xpath("//select[@id='language']"));
-//        Select langDropdown = new Select(languageDropdown);
-//
-//        WebElement passwordField = driver.findElement(By.id("password"));
-//        WebElement confirmPasswordField = driver.findElement(By.id("confirmPassword"));
-//        WebElement descriptionField = driver.findElement(By.id("about"));
-//
-//        WebElement categoryDropdown = driver.findElement(By.xpath("//select[@id='categories']"));
-//        Select catDropdown = new Select(categoryDropdown);
-//
-//        WebElement submitButton = driver.findElement(By.name("submit"));
-//
-//        firstNameField.sendKeys(firstName);
-//        lastNameField.sendKeys(lastName);
-//        emailField.sendKeys(generateMail(mailtype));
-//        phoneField.sendKeys(phone);
-//        genDropdown.selectByIndex(gender);
-//        langDropdown.selectByIndex(language);
-//        passwordField.sendKeys(password);
-//        confirmPasswordField.sendKeys(confirmPassword);
-//        descriptionField.sendKeys(description);
-//        catDropdown.selectByIndex(category);
-//
-//        submitButton.click();
-
         page.setFirstNameField(firstName);
         page.setLastNameField(lastName);
         page.setEmailField(generateMail(mailtype));
