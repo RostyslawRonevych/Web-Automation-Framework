@@ -4,6 +4,7 @@ import org.example.pages.VolunteerCreationPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.*;
+import utilities.BaseTest;
 import utilities.TestUtilities;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -64,8 +65,8 @@ public class VolunteerCreationPageTest {
         driver.get(volunteerRegPage);
         driver.manage().window().maximize();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("registration-form")));
+        BaseTest baseTest = new BaseTest();
+        baseTest.waitCreate(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.name("registration-form")));
 
         VolunteerCreationPage page = new VolunteerCreationPage(driver);
 
@@ -76,10 +77,7 @@ public class VolunteerCreationPageTest {
         page.setGenderField(gender);
         page.setLanguageField(language);
         page.setPasswordField(password);
-        System.out.println(password);
         page.setConfirmPassword(confirmPassword);
-        System.out.println(confirmPassword);
-        System.out.println(password.equals(confirmPassword));
         page.setAboutField(description);
         page.setCategoriesField(category);
 
@@ -89,8 +87,7 @@ public class VolunteerCreationPageTest {
 
         WebElement successMessage = null;
         try {
-            WebDriverWait confirmationWait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            confirmationWait.until(ExpectedConditions.visibilityOfElementLocated(By.name("message")));
+            baseTest.waitCreate(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.name("message")));
             successMessage = driver.findElement(By.name("message"));
         } catch (NoSuchElementException e) {
             // If the element is not found, proceed as needed for Negative case
