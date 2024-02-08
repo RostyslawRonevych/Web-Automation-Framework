@@ -42,20 +42,14 @@ public class PartnerRegistrationTest {
 
         driver.manage().window().maximize();
 
-//        WebElement navRegButton = driver.findElement(By.className("ml-auto"));
-//        navRegButton.click();
-//
-//        WebElement partnerButton = driver.findElement(By.name("partners"));
-//        partnerButton.click();
         HomePage homePage = new HomePage(driver);
 
         homePage.navRegButtonClick();
         homePage.partnerButtonClick();
 
-        BaseTest baseTest = new BaseTest();
-        baseTest.waitCreate(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("content")));
-
         PartnerCreationPage partnerPage = new PartnerCreationPage(driver);
+
+        partnerPage.formWait();
 
         partnerPage.setFirstNameField(partner.getFirstName());
         partnerPage.setLastNameField(partner.getLastName());
@@ -81,9 +75,10 @@ public class PartnerRegistrationTest {
         driver.get(mailPage);
 
         String email = partner.getEmail();
-        baseTest.waitCreate(driver, 100).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(), '"+email+"')]")));
 
         MailPage mailHogPage  = new MailPage(driver);
+
+        mailHogPage.emailWait(email);
 
         mailHogPage.targetMailClick(email);
         mailHogPage.confirmationLinkClick();
@@ -93,7 +88,7 @@ public class PartnerRegistrationTest {
         String lastTabHandle = (String) handlesArray[2];
         driver.switchTo().window(lastTabHandle);
 
-        baseTest.waitCreate(driver, 100).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.alert-success")));
+        mailHogPage.successWait();
 
         mailHogPage.verifySuccessMessage();
     }

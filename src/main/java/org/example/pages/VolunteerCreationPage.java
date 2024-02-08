@@ -7,11 +7,16 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class VolunteerCreationPage {
 
     WebDriver driver;
+    WebDriverWait wait;
 
     @FindBy(id = "firstName")
     private WebElement firstNameFieldElement;
@@ -104,5 +109,16 @@ public class VolunteerCreationPage {
         passFieldElement.getText();
     }
 
-    // Additional methods for validation, navigation, etc., can be added here
+    public WebDriverWait formWait(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("registration-form")));
+        return wait;
+    }
+
+    public WebDriverWait successWait(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("message")));
+        return wait;
+    }
+
 }

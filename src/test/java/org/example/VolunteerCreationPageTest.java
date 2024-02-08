@@ -65,10 +65,9 @@ public class VolunteerCreationPageTest {
         driver.get(volunteerRegPage);
         driver.manage().window().maximize();
 
-        BaseTest baseTest = new BaseTest();
-        baseTest.waitCreate(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.name("registration-form")));
-
         VolunteerCreationPage page = new VolunteerCreationPage(driver);
+
+        page.formWait();
 
         page.setFirstNameField(firstName);
         page.setLastNameField(lastName);
@@ -87,7 +86,7 @@ public class VolunteerCreationPageTest {
 
         WebElement successMessage = null;
         try {
-            baseTest.waitCreate(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.name("message")));
+            page.successWait();
             successMessage = driver.findElement(By.name("message"));
         } catch (NoSuchElementException e) {
             // If the element is not found, proceed as needed for Negative case

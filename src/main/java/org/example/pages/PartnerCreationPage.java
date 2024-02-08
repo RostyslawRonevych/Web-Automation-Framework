@@ -8,11 +8,11 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ;
+
+import java.time.Duration;
 
 public class PartnerCreationPage {
     WebDriver driver;
-    BaseTest baseTest = new BaseTest();
     WebDriverWait wait;
 
     @FindBy(id = "firstName")
@@ -113,7 +113,9 @@ public class PartnerCreationPage {
         registerButton.click();
     }
 
-    public void formWait(){
-        baseTest.waitCreate(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("content")));
+    public WebDriverWait formWait(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("content")));
+        return wait;
     }
 }
