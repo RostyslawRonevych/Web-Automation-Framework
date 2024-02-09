@@ -90,7 +90,7 @@ public class PartnerRegistrationTest {
 
         mailHogPage.successWait();
 
-        mailHogPage.verifySuccessMessage();
+        Assertions.assertTrue(mailHogPage.getSuccessMessage().contains("Email"));
     }
 
     @AfterAll

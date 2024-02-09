@@ -1,6 +1,5 @@
 package org.example.pages;
 
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,8 +34,10 @@ public class MailPage {
         confirmationLink.click();
     }
 
-    public void verifySuccessMessage(){
-        Assertions.assertTrue(confirmationMessage.getText().contains("Email"));
+    public String getSuccessMessage(){
+        String message;
+        message = confirmationMessage.getText();
+        return message;
     }
 
     public WebDriverWait emailWait(String email){
