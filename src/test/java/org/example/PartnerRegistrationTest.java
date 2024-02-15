@@ -9,10 +9,8 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.*;
-import utilities.BaseTest;
 import utilities.TestUtilities;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.Properties;
 import java.util.Set;

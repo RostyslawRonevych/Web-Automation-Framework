@@ -15,6 +15,7 @@ public class MailPage {
     WebDriver driver;
     WebElement targetMailElement;
     WebDriverWait wait;
+    BaseTest baseTest = new BaseTest();
     @FindBy(xpath = "//a[contains(text(), 'token')]")
     private WebElement confirmationLink;
     @FindBy (css = "div.alert-success")
@@ -40,16 +41,14 @@ public class MailPage {
         return message;
     }
 
-    public WebDriverWait emailWait(String email){
-        wait = new WebDriverWait(driver, Duration.ofSeconds(100));
+    public void emailWait(String email){
+        wait = baseTest.waitCreate(driver, 100);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(text(), '"+email+"')]")));
-        return wait;
     }
 
-    public WebDriverWait successWait(){
-        wait = new WebDriverWait(driver, Duration.ofSeconds(100));
+    public void successWait(){
+        wait = baseTest.waitCreate(driver, 100);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.alert-success")));
-        return wait;
     }
 
 

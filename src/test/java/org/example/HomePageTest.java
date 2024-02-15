@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.pages.LoginPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import utilities.TestUtilities;
@@ -43,17 +44,12 @@ public class HomePageTest {
 
         driver.get(url);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("login-form")));
+        LoginPage loginPage = new LoginPage(driver);
 
-        WebElement loginInputField = driver.findElement(By.id("login"));
-        loginInputField.sendKeys(login);
-
-        WebElement passwordInputField = driver.findElement(By.id("password"));
-        passwordInputField.sendKeys(password);
-
-        WebElement loginButton = driver.findElement(By.name("login-button"));
-        loginButton.click();
+        loginPage.formWait();
+        loginPage.setLoginField(login);
+        loginPage.setPasswordField(password);
+        loginPage.submitButtonClick();
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals(currentUrl, targetUrl);

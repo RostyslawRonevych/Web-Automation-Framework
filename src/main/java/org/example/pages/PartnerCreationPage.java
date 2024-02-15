@@ -14,6 +14,7 @@ import java.time.Duration;
 public class PartnerCreationPage {
     WebDriver driver;
     WebDriverWait wait;
+    BaseTest baseTest = new BaseTest();
 
     @FindBy(id = "firstName")
     private WebElement firstNameFieldElement;
@@ -113,9 +114,8 @@ public class PartnerCreationPage {
         registerButton.click();
     }
 
-    public WebDriverWait formWait(){
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    public void formWait(){
+        wait = baseTest.waitCreate(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("content")));
-        return wait;
     }
 }

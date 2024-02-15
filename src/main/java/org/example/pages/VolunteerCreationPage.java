@@ -17,6 +17,7 @@ public class VolunteerCreationPage {
 
     WebDriver driver;
     WebDriverWait wait;
+    BaseTest baseTest = new BaseTest();
 
     @FindBy(id = "firstName")
     private WebElement firstNameFieldElement;
@@ -109,16 +110,14 @@ public class VolunteerCreationPage {
         passFieldElement.getText();
     }
 
-    public WebDriverWait formWait(){
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    public void formWait(){
+        wait = baseTest.waitCreate(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("registration-form")));
-        return wait;
     }
 
-    public WebDriverWait successWait(){
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    public void successWait(){
+        wait = baseTest.waitCreate(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("message")));
-        return wait;
     }
 
 }
