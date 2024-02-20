@@ -2,8 +2,6 @@ package org.example.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -13,8 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class VolunteerCreationPage {
-
+public class PartnerCreationPage {
     WebDriver driver;
     WebDriverWait wait;
     BaseTest baseTest = new BaseTest();
@@ -31,12 +28,10 @@ public class VolunteerCreationPage {
     @FindBy(id = "phoneNumber")
     private WebElement phoneNumberFieldElement;
 
-    @FindBy(xpath = "//select[@id='sex']")
-    private WebElement genderDropdownElement;
-    private Select sexDropdownSelect;
-    @FindBy(xpath = "//select[@id='language']")
-    private WebElement languageDropdownElement;
-    private Select languageDropdownSelect;
+    @FindBy(id = "male")
+    private WebElement genderMaleElement;
+    @FindBy(id = "female")
+    private WebElement genderFemaleElement;
 
     @FindBy(id = "password")
     private WebElement passFieldElement;
@@ -44,22 +39,27 @@ public class VolunteerCreationPage {
     @FindBy(id = "confirmPassword")
     private WebElement confirmPassFieldElement;
 
-    @FindBy(id = "about")
-    private WebElement aboutFieldElement;
+    @FindBy(id = "organizationName")
+    private WebElement organizationNameElement;
 
-    @FindBy(xpath = "//select[@id='categories']")
+    @FindBy(id = "categoryIds")
     private WebElement categoriesDropdownElement;
     private Select categoriesDropdownSelect;
+
+    @FindBy(id = "positionInOrganization")
+    private WebElement positionElement;
+
+    @FindBy(id = "aboutOrganization")
+    private WebElement aboutElement;
 
     @FindBy(name = "submit")
     private WebElement registerButton;
 
-    public VolunteerCreationPage(WebDriver driver){
+    public PartnerCreationPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        sexDropdownSelect = new Select(genderDropdownElement);
-        languageDropdownSelect = new Select(languageDropdownElement);
         categoriesDropdownSelect = new Select(categoriesDropdownElement);
+
     }
 
     public void setFirstNameField(String firstName) {
@@ -78,12 +78,12 @@ public class VolunteerCreationPage {
         phoneNumberFieldElement.sendKeys(phone);
     }
 
-    public void setGenderField(int gender) {
-        sexDropdownSelect.selectByIndex(gender);
+    public void setGenderMale() {
+        genderMaleElement.click();
     }
 
-    public void setLanguageField(int language) {
-        languageDropdownSelect.selectByIndex(language);
+    public void setGenderFemale() {
+        genderFemaleElement.click();
     }
 
     public void setPasswordField(String password) {
@@ -94,32 +94,28 @@ public class VolunteerCreationPage {
         confirmPassFieldElement.sendKeys(confirmPassword);
     }
 
-    public void setAboutField (String about) {
-        aboutFieldElement.sendKeys(about);
+    public void setOrganizationName(String organizationName) {
+        organizationNameElement.sendKeys(organizationName);
     }
 
-    public void setCategoriesField(int categories) {
-        categoriesDropdownSelect.selectByIndex(categories);
+    public void setCategoriesField(int id) {
+        categoriesDropdownSelect.selectByIndex(id);
     }
 
-    public void clickRegister() {
+    public void setAboutElement(String position){
+        positionElement.sendKeys(position);
+    }
+
+    public void setPositionElement(String about){
+        positionElement.sendKeys(about);
+    }
+
+    public void registerClick(){
         registerButton.click();
-    }
-
-    public void getPasswordText(){
-        passFieldElement.getText();
     }
 
     public void formWait(){
         wait = baseTest.waitCreate(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("registration-form")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("content")));
     }
-
-    public WebElement successWait(){
-        wait = baseTest.waitCreate(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("message")));
-        WebElement successMessage = driver.findElement(By.name("message"));
-        return successMessage;
-    }
-
 }

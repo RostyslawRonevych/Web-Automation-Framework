@@ -1,26 +1,20 @@
 package org.example;
 
+import org.example.pages.LoginPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import utilities.TestUtilities;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-import java.util.List;
 import java.util.Properties;
 
-public class HomePageTest {
+public class LoginPageTest {
     Properties properties;
-    List<String> browsers;
     WebDriver driver;
     @BeforeEach
     public void setUp() {
@@ -43,17 +37,12 @@ public class HomePageTest {
 
         driver.get(url);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("login-form")));
+        LoginPage loginPage = new LoginPage(driver);
 
-        WebElement loginInputField = driver.findElement(By.id("login"));
-        loginInputField.sendKeys(login);
-
-        WebElement passwordInputField = driver.findElement(By.id("password"));
-        passwordInputField.sendKeys(password);
-
-        WebElement loginButton = driver.findElement(By.name("login-button"));
-        loginButton.click();
+        loginPage.formWait();
+        loginPage.setLoginField(login);
+        loginPage.setPasswordField(password);
+        loginPage.submitButtonClick();
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals(currentUrl, targetUrl);
