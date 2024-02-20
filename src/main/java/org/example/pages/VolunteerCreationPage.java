@@ -115,9 +115,11 @@ public class VolunteerCreationPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("registration-form")));
     }
 
-    public void successWait(){
+    public WebElement successWait(){
         wait = baseTest.waitCreate(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("message")));
+        WebElement successMessage = driver.findElement(By.name("message"));
+        return successMessage;
     }
 
 }

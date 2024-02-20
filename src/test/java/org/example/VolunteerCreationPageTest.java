@@ -79,8 +79,7 @@ public class VolunteerCreationPageTest {
 
         WebElement successMessage = null;
         try {
-            page.successWait();
-            successMessage = driver.findElement(By.name("message"));
+            successMessage = page.successWait();
         } catch (NoSuchElementException e) {
             // If the element is not found, proceed as needed for Negative case
             System.out.println("Couldn't register the account");
