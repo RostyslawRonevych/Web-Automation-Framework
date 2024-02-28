@@ -36,21 +36,6 @@ public class VolunteerCreationPageTest {
         String mailHogUrl = properties.getProperty("mailUrl");
         String volunteerRegPage = properties.getProperty("volunteerRegistrationPage");
 
-        if ("NULL".equals(firstName)) {
-            firstName = "";
-        }
-        if ("NULL".equals(lastName)) {
-            lastName = "";
-        }
-        if ("NULL".equals(phone)) {
-            phone = "";
-        }
-        if ("NULL".equals(password)) {
-            password = "";
-        }
-        if ("NULL".equals(confirmPassword)) {
-            confirmPassword = "";
-        }
         if ("NULL".equals(description)) {
             description = "";
         }
@@ -62,18 +47,17 @@ public class VolunteerCreationPageTest {
 
         page.formWait();
 
-        page.setFirstNameField(firstName);
-        page.setLastNameField(lastName);
-        page.setEmailField(generateMail(mailtype));
-        page.setPhoneField(phone);
-        page.setGenderField(gender);
-        page.setLanguageField(language);
-        page.setPasswordField(password);
-        page.setConfirmPassword(confirmPassword);
-        page.setAboutField(description);
-        page.setCategoriesField(category);
-
-        page.clickRegister();
+        page.setFirstNameField(firstName)
+            .setLastNameField(lastName)
+            .setEmailField(generateMail(mailtype))
+            .setPhoneField(phone)
+            .setGenderField(gender)
+            .setLanguageField(language)
+            .setPasswordField(password)
+            .setConfirmPassword(confirmPassword)
+            .setAboutField(description)
+            .setCategoriesField(category)
+            .clickRegister();
 
 
 

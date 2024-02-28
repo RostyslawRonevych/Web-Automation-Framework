@@ -62,57 +62,70 @@ public class VolunteerCreationPage {
         categoriesDropdownSelect = new Select(categoriesDropdownElement);
     }
 
-    public void setFirstNameField(String firstName) {
+    public VolunteerCreationPage setFirstNameField(String firstName) {
         firstNameFieldElement.sendKeys(firstName);
+        return this;
     }
 
-    public void setLastNameField(String lastName) {
+    public VolunteerCreationPage setLastNameField(String lastName) {
         lastNameFieldElement.sendKeys(lastName);
+        return this;
     }
 
-    public void setEmailField(String email) {
+    public VolunteerCreationPage setEmailField(String email) {
         emailFieldElement.sendKeys(email);
+        return this;
     }
 
-    public void setPhoneField(String phone) {
+    public VolunteerCreationPage setPhoneField(String phone) {
         phoneNumberFieldElement.sendKeys(phone);
+        return this;
     }
 
-    public void setGenderField(int gender) {
+    public VolunteerCreationPage setGenderField(int gender) {
         sexDropdownSelect.selectByIndex(gender);
+        return this;
     }
 
-    public void setLanguageField(int language) {
+    public VolunteerCreationPage setLanguageField(int language) {
         languageDropdownSelect.selectByIndex(language);
+        return this;
     }
 
-    public void setPasswordField(String password) {
+    public VolunteerCreationPage setPasswordField(String password) {
         passFieldElement.sendKeys(password);
+        return this;
     }
 
-    public void setConfirmPassword(String confirmPassword) {
+    public VolunteerCreationPage setConfirmPassword(String confirmPassword) {
         confirmPassFieldElement.sendKeys(confirmPassword);
+        return this;
     }
 
-    public void setAboutField (String about) {
+    public VolunteerCreationPage setAboutField (String about) {
         aboutFieldElement.sendKeys(about);
+        return this;
     }
 
-    public void setCategoriesField(int categories) {
+    public VolunteerCreationPage setCategoriesField(int categories) {
         categoriesDropdownSelect.selectByIndex(categories);
+        return this;
     }
 
-    public void clickRegister() {
+    public VolunteerCreationPage clickRegister() {
         registerButton.click();
+        return this;
     }
 
-    public void getPasswordText(){
+    public VolunteerCreationPage getPasswordText(){
         passFieldElement.getText();
+        return this;
     }
 
-    public void formWait(){
+    public VolunteerCreationPage formWait(){
         wait = baseTest.waitCreate(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("registration-form")));
+        return this;
     }
 
     public WebElement successWait(){
