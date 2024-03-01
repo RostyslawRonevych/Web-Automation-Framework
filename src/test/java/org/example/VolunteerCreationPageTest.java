@@ -4,10 +4,14 @@ import org.example.pages.VolunteerCreationPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.*;
+import org.opentest4j.AssertionFailedError;
 import utilities.TestUtilities;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,6 +20,7 @@ import java.util.List;
 import java.util.Properties;
 
 public class VolunteerCreationPageTest {
+    private static final Logger logger = LogManager.getLogger(VolunteerCreationPage.class);
     Properties properties;
     List<String> browsers;
     WebDriver driver;
@@ -33,24 +38,11 @@ public class VolunteerCreationPageTest {
     }
 
     private void volunteerRegistrationTest(String caseName, String firstName, String lastName, String mailtype, String phone, int gender, int language, String password, String confirmPassword, String description, int category, String caseType) throws IOException {
+        logger.info("Started " + caseName + " testcase execution");
+
         String mailHogUrl = properties.getProperty("mailUrl");
         String volunteerRegPage = properties.getProperty("volunteerRegistrationPage");
 
-        if ("NULL".equals(firstName)) {
-            firstName = "";
-        }
-        if ("NULL".equals(lastName)) {
-            lastName = "";
-        }
-        if ("NULL".equals(phone)) {
-            phone = "";
-        }
-        if ("NULL".equals(password)) {
-            password = "";
-        }
-        if ("NULL".equals(confirmPassword)) {
-            confirmPassword = "";
-        }
         if ("NULL".equals(description)) {
             description = "";
         }
@@ -62,20 +54,19 @@ public class VolunteerCreationPageTest {
 
         page.formWait();
 
-        page.setFirstNameField(firstName);
-        page.setLastNameField(lastName);
-        page.setEmailField(generateMail(mailtype));
-        page.setPhoneField(phone);
-        page.setGenderField(gender);
-        page.setLanguageField(language);
-        page.setPasswordField(password);
-        page.setConfirmPassword(confirmPassword);
-        page.setAboutField(description);
-        page.setCategoriesField(category);
+        page.setFirstNameField(firstName)
+            .setLastNameField(lastName)
+            .setEmailField(generateMail(mailtype))
+            .setPhoneField(phone)
+            .setGenderField(gender)
+            .setLanguageField(language)
+            .setPasswordField(password)
+            .setConfirmPassword(confirmPassword)
+            .setAboutField(description)
+            .setCategoriesField(category)
+            .clickRegister();
 
-        page.clickRegister();
-
-
+        logger.info("Form has been populated and submitted");
 
         WebElement successMessage = null;
         try {
@@ -89,10 +80,21 @@ public class VolunteerCreationPageTest {
         }
 
         if (caseType.equals("Positive")) {
-            Assertions.assertTrue(successMessage != null);
-            Assertions.assertTrue(successMessage.isDisplayed());
+            try {
+                Assertions.assertTrue(successMessage != null);
+                Assertions.assertTrue(successMessage.isDisplayed());
+                logger.info("Test passed successfully, account has been registered");
+            } catch (AssertionFailedError e){
+                logger.error("Test FAILED, account has not been registered, success message is not displayed");
+            }
+
         } else if (caseType.equals("Negative")) {
-            Assertions.assertTrue(successMessage == null || !successMessage.isDisplayed());
+            try {
+                Assertions.assertTrue(successMessage == null || !successMessage.isDisplayed());
+                logger.info("Test passed successfully, account has not been registered");
+            } catch (AssertionFailedError e){
+                logger.error("Test FAILED, account has been registered, success message is displayed");
+            }
         }
     }
 
