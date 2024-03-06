@@ -104,6 +104,9 @@ public class OrganizationCreationTest {
         LoginPage loginPage = new LoginPage(driver);
 
         loginPage.login(organization.getEmail(), organization.getPassword());
+
+        homePage.tasksDropdownClick();
+        homePage.registerVolunteerTaskClick();
     }
 
 //    @AfterAll

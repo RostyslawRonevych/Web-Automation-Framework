@@ -59,7 +59,6 @@ public class PartnerCreationPage {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         categoriesDropdownSelect = new Select(categoriesDropdownElement);
-
     }
 
     public void setFirstNameField(String firstName) {
