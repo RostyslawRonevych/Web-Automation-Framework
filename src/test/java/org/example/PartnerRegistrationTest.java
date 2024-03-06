@@ -1,5 +1,7 @@
 package org.example;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.Model.Partner;
 import org.example.pages.HomePage;
 import org.example.pages.MailPage;
@@ -15,10 +17,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import java.util.Properties;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @ExtendWith(InstancioExtension.class)
 public class PartnerRegistrationTest {
+    private static final Logger logger = LogManager.getLogger(PartnerRegistrationTest.class);
     static Properties properties;
     static WebDriver driver;
 
@@ -52,8 +53,10 @@ public class PartnerRegistrationTest {
         partnerPage.setFirstNameField(partner.getFirstName());
         partnerPage.setLastNameField(partner.getLastName());
         partnerPage.setEmailField(partner.getEmail());
+        logger.info(partner.getEmail());
         partnerPage.setPhoneField(partner.getPhone());
         partnerPage.setPasswordField(partner.getPassword());
+        logger.info(partner.getPassword());
         partnerPage.setConfirmPassword(partner.getPassword());
         if(partner.getSex() == 1){
             partnerPage.setGenderFemale();

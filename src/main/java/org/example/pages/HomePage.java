@@ -14,6 +14,9 @@ public class HomePage {
     @FindBy(name = "partners")
     private WebElement partnerButton;
 
+    @FindBy(name = "organizations")
+    private WebElement organizationsButton;
+
     public HomePage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -25,5 +28,9 @@ public class HomePage {
 
     public void partnerButtonClick(){
         partnerButton.click();
+    }
+
+    public void organizationsButtonClick(){
+        organizationsButton.click();
     }
 }
