@@ -40,7 +40,7 @@ public class VolunteerTaskPage {
     @FindBy(id = "interviewRequired")
     private WebElement interviewRequiredCheckboxElement;
 
-    @FindBy(id = "number")
+    @FindBy(id = "savedMoney")
     private WebElement savingsFieldElement;
 
     @FindBy(id = "currency")
@@ -57,8 +57,24 @@ public class VolunteerTaskPage {
     private WebElement stages0durationMeasureElement;
     private Select stages0durationMeasureDropdown;
 
+    @FindBy(name = "stages[1].description")
+    private WebElement stages1descriptionFieldElement;
+
+    @FindBy(name = "stages[1].name")
+    private WebElement stages1nameFieldElement;
+
+    @FindBy(name = "stages[1].duration")
+    private WebElement stages1durationFieldElement;
+
+    @FindBy(name = "stages[1].durationMeasure")
+    private WebElement stages1durationMeasureElement;
+    private Select stages1durationMeasureDropdown;
+
     @FindBy(name = "stages[0].description")
     private WebElement stages0descriptionFieldElement;
+
+    @FindBy(xpath = "//button[@value='PUBLISHED']")
+    private WebElement submitPublishButtonElement;
 
     public VolunteerTaskPage(WebDriver driver) {
         this.driver = driver;
@@ -66,6 +82,7 @@ public class VolunteerTaskPage {
         categoriesDropdown = new Select(categoriesElement);
         currencyDropdown  = new Select(currencyElement);
         stages0durationMeasureDropdown = new Select(stages0durationMeasureElement);
+        stages1durationMeasureDropdown = new Select(stages1durationMeasureElement);
     }
 
     public void setTaskName(String value){
@@ -82,6 +99,10 @@ public class VolunteerTaskPage {
 
     public void setTaskDescription(String value){
         descriptionFieldElement.sendKeys(value);
+    }
+
+    public void setTaskOutcome(String value){
+        expectedOutcomeFieldElement.sendKeys(value);
     }
 
     public void setTaskBenefit(String value){
@@ -107,7 +128,7 @@ public class VolunteerTaskPage {
     }
 
     public void setTaskStage0name(String value){
-        stages0descriptionFieldElement.sendKeys(value);
+        stages0nameFieldElement.sendKeys(value);
     }
 
     public void setTaskStage0Duration(String value){
@@ -120,5 +141,25 @@ public class VolunteerTaskPage {
 
     public void setTaskStage0Description(String value){
         stages0descriptionFieldElement.sendKeys(value);
+    }
+
+    public void setTaskStage1name(String value){
+        stages0nameFieldElement.sendKeys(value);
+    }
+
+    public void setTaskStage1Duration(String value){
+        stages0durationFieldElement.sendKeys(value);
+    }
+
+    public void setTaskStage1Measurement(int value){
+        stages1durationMeasureDropdown.selectByIndex(value);
+    }
+
+    public void setTaskStage1Description(String value){
+        stages1descriptionFieldElement.sendKeys(value);
+    }
+
+    public void submitPublishClick(){
+        submitPublishButtonElement.click();
     }
 }

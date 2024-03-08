@@ -3,10 +3,8 @@ package org.example;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.Model.Organization;
-import org.example.pages.HomePage;
-import org.example.pages.LoginPage;
-import org.example.pages.MailPage;
-import org.example.pages.OrganizationCreationPage;
+import org.example.Model.VolunteerTask;
+import org.example.pages.*;
 import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,6 +17,8 @@ import utilities.TestUtilities;
 
 import java.util.Properties;
 import java.util.Set;
+
+import static org.example.Model.VolunteerTask.createVolunteerTaskStreamValid;
 
 @ExtendWith(InstancioExtension.class)
 public class OrganizationCreationTest {
@@ -107,6 +107,32 @@ public class OrganizationCreationTest {
 
         homePage.tasksDropdownClick();
         homePage.registerVolunteerTaskClick();
+
+        VolunteerTaskPage taskPage = new VolunteerTaskPage(driver);
+
+        for (int i = 0; i < 3; i++) {
+            VolunteerTask task = createVolunteerTaskStreamValid().findFirst().orElse(null);
+
+            taskPage.setTaskName(task.getTaskName());
+            taskPage.setTaskCategory(task.getCategory());
+            taskPage.setTaskExpDate(task.getExpDate());
+            taskPage.setTaskDescription(task.getTaskDescription());
+            taskPage.setTaskOutcome(task.getOutputDescription());
+            taskPage.setTaskBenefit(task.getReward());
+            taskPage.setTaskRequirements(task.getRequirements());
+            taskPage.setTaskInterview(task.isInterview());
+            taskPage.setTaskSavings(task.getMoneySum());
+            taskPage.setTaskCurrency(task.getCurrency());
+            taskPage.setTaskStage0name(task.getStep0Name());
+            taskPage.setTaskStage0Duration(task.getStep0Duration());
+            taskPage.setTaskStage0Measurement(task.getStep0Measurement());
+            taskPage.setTaskStage0Description(task.getStep0Description());
+            taskPage.setTaskStage1name(task.getStep1Name());
+            taskPage.setTaskStage1Duration(task.getStep1Duration());
+            taskPage.setTaskStage1Measurement(task.getStep1Measurement());
+            taskPage.setTaskStage1Description(task.getStep1Description());
+            taskPage.submitPublishClick();
+        }
     }
 
 //    @AfterAll
