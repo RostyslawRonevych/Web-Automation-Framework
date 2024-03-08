@@ -1,5 +1,7 @@
 package org.example.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,6 +13,7 @@ public class VolunteerTaskPage {
     WebDriver driver;
     BaseTest baseTest = new BaseTest();
     WebDriverWait wait;
+    private static final Logger logger = LogManager.getLogger(VolunteerTaskPage.class);
 
     @FindBy(id = "name")
     private WebElement nameFieldElement;
@@ -144,11 +147,12 @@ public class VolunteerTaskPage {
     }
 
     public void setTaskStage1name(String value){
-        stages0nameFieldElement.sendKeys(value);
+        stages1nameFieldElement.sendKeys(value);
+
     }
 
     public void setTaskStage1Duration(String value){
-        stages0durationFieldElement.sendKeys(value);
+        stages1durationFieldElement.sendKeys(value);
     }
 
     public void setTaskStage1Measurement(int value){

@@ -45,10 +45,10 @@ public class VolunteerTask {
                 .generate(field(VolunteerTask::getStep0Duration), gen -> gen.text().pattern("5"))
                 .generate(field(VolunteerTask::getStep0Measurement), gen -> gen.ints().min(0).max(0))
                 .generate(field(VolunteerTask::getStep0Description), gen -> gen.text().pattern("Step 0 description: #d#d#d#d#d"))
-                .generate(field(VolunteerTask::getStep1Name), gen -> gen.text().pattern("Step 0 name: #d#d#d#d#d"))
+                .generate(field(VolunteerTask::getStep1Name), gen -> gen.text().pattern("Step 1 name: #d#d#d#d#d"))
                 .generate(field(VolunteerTask::getStep1Duration), gen -> gen.text().pattern("5"))
                 .generate(field(VolunteerTask::getStep1Measurement), gen -> gen.ints().min(0).max(0))
-                .generate(field(VolunteerTask::getStep1Description), gen -> gen.text().pattern("Step 0 description: #d#d#d#d#d"))
+                .generate(field(VolunteerTask::getStep1Description), gen -> gen.text().pattern("Step 1 description: #d#d#d#d#d"))
                 .create();
         Stream<VolunteerTask> volunteerTaskStream = list.stream();
         return volunteerTaskStream;
