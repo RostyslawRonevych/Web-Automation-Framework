@@ -74,6 +74,8 @@ public class OrganizationCreationTest {
 
         orgPage.registerClick();
 
+        logger.info("NGO registered successfully");
+
         String mailPage = properties.getProperty("mailUrl");
         driver.switchTo().newWindow(WindowType.TAB);
         driver.get(mailPage);
@@ -132,6 +134,17 @@ public class OrganizationCreationTest {
             taskPage.setTaskStage1Measurement(task.getStep1Measurement());
             taskPage.setTaskStage1Description(task.getStep1Description());
             taskPage.submitPublishClick();
+
+            logger.info("Task created successfully");
+
+            VolunteerTaskPublishedPage publishedTaskPage = new VolunteerTaskPublishedPage(driver);
+
+            publishedTaskPage.verifyTaskData(task);
+
+            logger.info("Task data verification finished");
+
+            publishedTaskPage.tasksDropdownClick();
+            publishedTaskPage.registerVolunteerTaskClick();
         }
     }
 

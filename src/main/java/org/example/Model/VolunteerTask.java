@@ -1,7 +1,7 @@
 package org.example.Model;
 
 import org.instancio.Instancio;
-
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Stream;
@@ -33,7 +33,7 @@ public class VolunteerTask {
                 .size(1)
                 .generate(field(VolunteerTask::getTaskName), gen -> gen.text().pattern("Task: #C#c#c#c#c#c"))
                 .generate(field(VolunteerTask::getCategory), gen -> gen.ints().min(1).max(10))
-                .generate(field(VolunteerTask::getExpDate), gen -> gen.temporal().localDate().future().as(dob -> dob.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))))
+                .generate(field(VolunteerTask::getExpDate), gen -> gen.temporal().localDate().as(dob -> LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))))
                 .generate(field(VolunteerTask::getTaskDescription), gen -> gen.text().pattern("Description #d#d#d#d#d"))
                 .generate(field(VolunteerTask::getOutputDescription), gen -> gen.text().pattern("#C#C#d#c#c#d#d#d#d#d"))
                 .generate(field(VolunteerTask::getReward), gen -> gen.text().pattern("#C#C#d#c#c#d#d#d#d#d"))
@@ -42,11 +42,11 @@ public class VolunteerTask {
                 .generate(field(VolunteerTask::getMoneySum), gen -> gen.text().pattern("#d#d#d#d#d"))
                 .generate(field(VolunteerTask::getCurrency), gen -> gen.ints().min(0).max(2))
                 .generate(field(VolunteerTask::getStep0Name), gen -> gen.text().pattern("Step 0 name: #d#d#d#d#d"))
-                .generate(field(VolunteerTask::getStep0Duration), gen -> gen.text().pattern("5"))
+                .generate(field(VolunteerTask::getStep0Duration), gen -> gen.text().pattern("1#d"))
                 .generate(field(VolunteerTask::getStep0Measurement), gen -> gen.ints().min(0).max(0))
                 .generate(field(VolunteerTask::getStep0Description), gen -> gen.text().pattern("Step 0 description: #d#d#d#d#d"))
                 .generate(field(VolunteerTask::getStep1Name), gen -> gen.text().pattern("Step 1 name: #d#d#d#d#d"))
-                .generate(field(VolunteerTask::getStep1Duration), gen -> gen.text().pattern("5"))
+                .generate(field(VolunteerTask::getStep1Duration), gen -> gen.text().pattern("1#d"))
                 .generate(field(VolunteerTask::getStep1Measurement), gen -> gen.ints().min(0).max(0))
                 .generate(field(VolunteerTask::getStep1Description), gen -> gen.text().pattern("Step 1 description: #d#d#d#d#d"))
                 .create();

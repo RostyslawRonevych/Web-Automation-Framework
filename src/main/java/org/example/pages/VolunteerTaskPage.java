@@ -13,7 +13,6 @@ public class VolunteerTaskPage {
     WebDriver driver;
     BaseTest baseTest = new BaseTest();
     WebDriverWait wait;
-    private static final Logger logger = LogManager.getLogger(VolunteerTaskPage.class);
 
     @FindBy(id = "name")
     private WebElement nameFieldElement;
