@@ -23,8 +23,8 @@ public class PrivateTest {
         String fileName = "D:\\maps.txt"; // Replace with the path to your file
         String linkBody = "https://osu.ppy.sh/beatmapsets/";
         String fullLink;
-        String login = "wataripro";
-        String password = "123QWERTY123as";
+        String login = "";
+        String password = "";
 
 
         String[] content = new String(Files.readAllBytes(Paths.get(fileName))).split(", ");
