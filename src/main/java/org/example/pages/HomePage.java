@@ -14,6 +14,18 @@ public class HomePage {
     @FindBy(name = "partners")
     private WebElement partnerButton;
 
+    @FindBy(name = "organizations")
+    private WebElement organizationsButton;
+
+    @FindBy(id = "tasksDropdown")
+    private WebElement tasksDropdown;
+
+    @FindBy(xpath = "//a[@href='/tasks/register/partner']")
+    private WebElement registerPartnerTask;
+
+    @FindBy(xpath = "//a[@href='/tasks/register/volunteer']")
+    private WebElement registerVolunteerTask;
+
     public HomePage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -25,5 +37,21 @@ public class HomePage {
 
     public void partnerButtonClick(){
         partnerButton.click();
+    }
+
+    public void organizationsButtonClick(){
+        organizationsButton.click();
+    }
+
+    public void tasksDropdownClick(){
+        tasksDropdown.click();
+    }
+
+    public void registerPartnerTaskClick(){
+        registerPartnerTask.click();
+    }
+
+    public void registerVolunteerTaskClick(){
+        registerVolunteerTask.click();
     }
 }

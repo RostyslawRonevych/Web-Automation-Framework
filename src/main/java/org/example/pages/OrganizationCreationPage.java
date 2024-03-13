@@ -9,9 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
-public class PartnerCreationPage {
+public class OrganizationCreationPage {
     WebDriver driver;
     WebDriverWait wait;
     BaseTest baseTest = new BaseTest();
@@ -55,10 +53,14 @@ public class PartnerCreationPage {
     @FindBy(name = "submit")
     private WebElement registerButton;
 
-    public PartnerCreationPage(WebDriver driver) {
+    @FindBy(xpath = "//a[@href='/login']")
+    private WebElement loginButton;
+
+    public OrganizationCreationPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         categoriesDropdownSelect = new Select(categoriesDropdownElement);
+
     }
 
     public void setFirstNameField(String firstName) {
@@ -116,5 +118,9 @@ public class PartnerCreationPage {
     public void formWait(){
         wait = baseTest.waitCreate(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("content")));
+    }
+
+    public void loginButtonClick(){
+        loginButton.click();
     }
 }

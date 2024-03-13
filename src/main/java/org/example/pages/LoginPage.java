@@ -41,4 +41,10 @@ public class LoginPage {
         wait = baseTest.waitCreate(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("login-form")));
     }
+
+    public void login (String email, String password){
+        loginFieldElement.sendKeys(email);
+        passwordFieldElement.sendKeys(password);
+        submitButtonElement.click();
+    }
 }

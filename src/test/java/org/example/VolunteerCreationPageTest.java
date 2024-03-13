@@ -73,10 +73,8 @@ public class VolunteerCreationPageTest {
             successMessage = page.successWait();
         } catch (NoSuchElementException e) {
             // If the element is not found, proceed as needed for Negative case
-            System.out.println("Couldn't register the account");
         } catch (TimeoutException e){
             // if the success message isnt there in time the test will proceed
-            System.out.println("Couldn't register the account");
         }
 
         if (caseType.equals("Positive")) {
